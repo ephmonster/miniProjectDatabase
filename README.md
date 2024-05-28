@@ -1,6 +1,6 @@
 # Airplane Equipment Database 
 
-## Ephraim Unger and Eli Hawk
+## Ephraim Ungar and Eli Hawk
 
 ## Project Proposal
 
