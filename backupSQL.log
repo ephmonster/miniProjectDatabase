@@ -1,0 +1,144 @@
+pg_dump: last built-in OID is 16383
+pg_dump: reading extensions
+pg_dump: identifying extension members
+pg_dump: reading schemas
+pg_dump: reading user-defined tables
+pg_dump: reading user-defined functions
+pg_dump: reading user-defined types
+pg_dump: reading procedural languages
+pg_dump: reading user-defined aggregate functions
+pg_dump: reading user-defined operators
+pg_dump: reading user-defined access methods
+pg_dump: reading user-defined operator classes
+pg_dump: reading user-defined operator families
+pg_dump: reading user-defined text search parsers
+pg_dump: reading user-defined text search templates
+pg_dump: reading user-defined text search dictionaries
+pg_dump: reading user-defined text search configurations
+pg_dump: reading user-defined foreign-data wrappers
+pg_dump: reading user-defined foreign servers
+pg_dump: reading default privileges
+pg_dump: reading user-defined collations
+pg_dump: reading user-defined conversions
+pg_dump: reading type casts
+pg_dump: reading transforms
+pg_dump: reading table inheritance information
+pg_dump: reading event triggers
+pg_dump: finding extension tables
+pg_dump: finding inheritance relationships
+pg_dump: reading column info for interesting tables
+pg_dump: flagging inherited columns in subtables
+pg_dump: reading partitioning data
+pg_dump: reading indexes
+pg_dump: flagging indexes in partitioned tables
+pg_dump: reading extended statistics
+pg_dump: reading constraints
+pg_dump: reading triggers
+pg_dump: reading rewrite rules
+pg_dump: reading policies
+pg_dump: reading row-level security policies
+pg_dump: reading publications
+pg_dump: reading publication membership of tables
+pg_dump: reading publication membership of schemas
+pg_dump: reading subscriptions
+pg_dump: reading large objects
+pg_dump: reading dependency data
+pg_dump: saving encoding = UTF8
+pg_dump: saving standard_conforming_strings = on
+pg_dump: saving search_path = 
+pg_dump: dropping FK CONSTRAINT tugs tugs_fk2
+pg_dump: dropping FK CONSTRAINT tugs tugs_fk1
+pg_dump: dropping FK CONSTRAINT truckload truckload_fk2
+pg_dump: dropping FK CONSTRAINT truckload truckload_fk1
+pg_dump: dropping FK CONSTRAINT landingtakingoff runway_fkey
+pg_dump: dropping FK CONSTRAINT landingtakingoff landingtakingoff_serialnumber_fkey
+pg_dump: dropping FK CONSTRAINT jetbridge jetbridge_gatenumber_location_fkey
+pg_dump: dropping FK CONSTRAINT airplanetype fueltype_fkey
+pg_dump: dropping FK CONSTRAINT fuelstock fuelstock_typeoffuel_fkey
+pg_dump: dropping FK CONSTRAINT airplane airplane_makeandmodel_fkey
+pg_dump: dropping CONSTRAINT tugs tugs_pkey
+pg_dump: dropping CONSTRAINT truckload truckload_pkey
+pg_dump: dropping CONSTRAINT runway runway_pkey
+pg_dump: dropping CONSTRAINT landingtakingoff landingtakingoff_pkey
+pg_dump: dropping CONSTRAINT jetbridge jetbridge_pkey
+pg_dump: dropping CONSTRAINT gate gate_pkey
+pg_dump: dropping CONSTRAINT fueltype fueltype_pkey
+pg_dump: dropping CONSTRAINT fuelstock fuelstock_pkey
+pg_dump: dropping CONSTRAINT fuelingtruck fuelingtruck_pkey
+pg_dump: dropping CONSTRAINT airplanetype airplanetype_pkey
+pg_dump: dropping CONSTRAINT airplanetug airplanetug_pkey
+pg_dump: dropping CONSTRAINT airplane airplane_pkey
+pg_dump: dropping TABLE tugs
+pg_dump: dropping TABLE truckload
+pg_dump: dropping TABLE runway
+pg_dump: dropping TABLE landingtakingoff
+pg_dump: dropping TABLE jetbridge
+pg_dump: dropping TABLE gate
+pg_dump: dropping TABLE fueltype
+pg_dump: dropping TABLE fuelstock
+pg_dump: dropping TABLE fuelingtruck
+pg_dump: dropping TABLE airplanetype
+pg_dump: dropping TABLE airplanetug
+pg_dump: dropping TABLE airplane
+pg_dump: dropping SCHEMA public
+pg_dump: creating SCHEMA "public"
+pg_dump: creating COMMENT "SCHEMA public"
+pg_dump: creating TABLE "public.airplane"
+pg_dump: creating TABLE "public.airplanetug"
+pg_dump: creating TABLE "public.airplanetype"
+pg_dump: creating TABLE "public.fuelingtruck"
+pg_dump: creating TABLE "public.fuelstock"
+pg_dump: creating TABLE "public.fueltype"
+pg_dump: creating TABLE "public.gate"
+pg_dump: creating TABLE "public.jetbridge"
+pg_dump: creating TABLE "public.landingtakingoff"
+pg_dump: creating TABLE "public.runway"
+pg_dump: creating TABLE "public.truckload"
+pg_dump: creating TABLE "public.tugs"
+pg_dump: processing data for table "public.airplane"
+pg_dump: dumping contents of table "public.airplane"
+pg_dump: processing data for table "public.airplanetug"
+pg_dump: dumping contents of table "public.airplanetug"
+pg_dump: processing data for table "public.airplanetype"
+pg_dump: dumping contents of table "public.airplanetype"
+pg_dump: processing data for table "public.fuelingtruck"
+pg_dump: dumping contents of table "public.fuelingtruck"
+pg_dump: processing data for table "public.fuelstock"
+pg_dump: dumping contents of table "public.fuelstock"
+pg_dump: processing data for table "public.fueltype"
+pg_dump: dumping contents of table "public.fueltype"
+pg_dump: processing data for table "public.gate"
+pg_dump: dumping contents of table "public.gate"
+pg_dump: processing data for table "public.jetbridge"
+pg_dump: dumping contents of table "public.jetbridge"
+pg_dump: processing data for table "public.landingtakingoff"
+pg_dump: dumping contents of table "public.landingtakingoff"
+pg_dump: processing data for table "public.runway"
+pg_dump: dumping contents of table "public.runway"
+pg_dump: processing data for table "public.truckload"
+pg_dump: dumping contents of table "public.truckload"
+pg_dump: processing data for table "public.tugs"
+pg_dump: dumping contents of table "public.tugs"
+pg_dump: creating CONSTRAINT "public.airplane airplane_pkey"
+pg_dump: creating CONSTRAINT "public.airplanetug airplanetug_pkey"
+pg_dump: creating CONSTRAINT "public.airplanetype airplanetype_pkey"
+pg_dump: creating CONSTRAINT "public.fuelingtruck fuelingtruck_pkey"
+pg_dump: creating CONSTRAINT "public.fuelstock fuelstock_pkey"
+pg_dump: creating CONSTRAINT "public.fueltype fueltype_pkey"
+pg_dump: creating CONSTRAINT "public.gate gate_pkey"
+pg_dump: creating CONSTRAINT "public.jetbridge jetbridge_pkey"
+pg_dump: creating CONSTRAINT "public.landingtakingoff landingtakingoff_pkey"
+pg_dump: creating CONSTRAINT "public.runway runway_pkey"
+pg_dump: creating CONSTRAINT "public.truckload truckload_pkey"
+pg_dump: creating CONSTRAINT "public.tugs tugs_pkey"
+pg_dump: creating FK CONSTRAINT "public.airplane airplane_makeandmodel_fkey"
+pg_dump: creating FK CONSTRAINT "public.fuelstock fuelstock_typeoffuel_fkey"
+pg_dump: creating FK CONSTRAINT "public.airplanetype fueltype_fkey"
+pg_dump: creating FK CONSTRAINT "public.jetbridge jetbridge_gatenumber_location_fkey"
+pg_dump: creating FK CONSTRAINT "public.landingtakingoff landingtakingoff_serialnumber_fkey"
+pg_dump: creating FK CONSTRAINT "public.landingtakingoff runway_fkey"
+pg_dump: creating FK CONSTRAINT "public.truckload truckload_fk1"
+pg_dump: creating FK CONSTRAINT "public.truckload truckload_fk2"
+pg_dump: creating FK CONSTRAINT "public.tugs tugs_fk1"
+pg_dump: creating FK CONSTRAINT "public.tugs tugs_fk2"
+pg_dump: creating ACL "SCHEMA public"
