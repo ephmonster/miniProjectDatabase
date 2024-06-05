@@ -45,3 +45,31 @@ The current ERD does not cover:
 
 
 ![DSDImage](https://github.com/ephmonster/miniProjectDatabase/assets/71876859/a612c6c7-3bce-4a00-92fb-aa7b711a1474)
+
+![Screenshot (5)](https://github.com/ephmonster/miniProjectDatabase/assets/71876859/64b1450f-40db-4297-8d74-118eaba3543e)
+
+### Data Generation
+#### Amount of Data
+  1) Airplane Type:  20 different types of planes with varying manufacturers and Make and Models
+  2) Airplane: 12884, each plane is a type of 'Airplane Type'
+  3) FuelingTruck: 4000
+  4) Airplane tug: 3600
+  5) Fuel Stock: 42
+  6) Fuel Type: 3
+  7) Gates: 1400
+  8) JetBridge: 1400
+  9) TruckLoads: 200091
+  10) LandingsTakeoff: 400182
+  11) Refuelings: 200091
+  12) Runways: 52
+
+#### Method of Data Generation
+*Note:* The python script used to generate the data is on GitHub with the name: airplane_equipment_data_generation.py
+1) We created a list of various airports we will simulate airplane and equipment usage.
+2) Then, we created the vairous types of critical equipment in significant amounts giving a few hundred Refueling Trucks and Tugs at each airport.
+3) Created planes to land and takeoff by airports.
+4) Generated 200091 Takeoff and landings, for each time a plane lands at the airport there is a tug that tugs it, a truckload full of fuel, and a refueling that the truck gives to that plane which has date within a few days of the planes landing, and is before its takeoff.
+5) The Takeoffs and Landings are randomized, simulating variying capacties of planes taking off and landing at the 14 airports. For each time a plane lands at an airport there is an entry of that plane taking off as well within a few days.
+6) Each Takeoff/Landing has a specific runway at the airport associated with it that the plane landed on.
+7) For each truckload that is generated with a refueling of the plane it is ensured that the truck is loaded with the proper type of fuel for that plane.
+8) Each airport has 100 gates and each gate has a jet bridge to connect it to the plane.
