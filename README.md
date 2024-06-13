@@ -81,4 +81,8 @@ The current ERD does not cover:
 ### Queries
 #### Regular Queries
 1) 
-2) 
+2)  Get all serial numbers of airplanes manufactured by 'Boeing'
+3)  Get count of all airplane tugs by manufacturer at an airport
+##### Update Queries
+1)  Update price for a type of fuel
+2)  Update airplane range (e.g. if it got an engine/fueltank upgrade with increased range)
