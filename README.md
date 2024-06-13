@@ -73,3 +73,12 @@ The current ERD does not cover:
 6) Each Takeoff/Landing has a specific runway at the airport associated with it that the plane landed on.
 7) For each truckload that is generated with a refueling of the plane it is ensured that the truck is loaded with the proper type of fuel for that plane.
 8) Each airport has 100 gates and each gate has a jet bridge to connect it to the plane.
+
+### Backups
+
+#### Data Dump Command
+
+### Queries
+#### Regular Queries
+1) 
+2) 
