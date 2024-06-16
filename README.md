@@ -81,7 +81,7 @@ The current ERD does not cover:
 ### Queries
 #### Regular Queries
 ##### Select Queries
-1) SELECT makeandmodel, COUNT(*) FROM airplane GROUP BY makeandmodel;
+1) Query: SELECT makeandmodel, COUNT(*) FROM airplane GROUP BY makeandmodel;
   * Retrieve the make and model of each airplane.
   * Count how many airplanes exist for each make and model.
   * Group the results by the make and model.
@@ -109,3 +109,26 @@ The current ERD does not cover:
 8) Query: DELETE FROM truckload WHERE date < CURRENT_DATE - INTERVAL '5 months';
   * Delete entries from the truckload table.
   * Remove records where the date is older than 5 months from the current date.
+#### Parameterized Queries
+1) Query: PREPARE get_airplanes_by_date_location (date, text) AS SELECT a.* FROM airplane a JOIN landingtakingoff l ON a.serialnumber = l.serialnumber WHERE l.date = $1 AND l.location = $2;
+   * Prepare a statement named get_airplanes_by_date_location that accepts a date and a text string as parameters.
+   * Select all columns from the airplane table.
+   * Join the airplane table with the landingtakingoff table on the serial number.
+   * Filter the results to include only those records where the date matches the provided date parameter and the location matches the provided text parameter.
+2) PREPARE get_fueling_trucks_by_fuel (text) AS SELECT f.* FROM fuelingtruck f JOIN truckload t ON f.licenseplate = t.licenseplate WHERE t.typeoffuel = $1 ORDER BY f.lastmaintained;
+   * Prepare a statement named get_fueling_trucks_by_fuel that accepts a text string as a parameter.
+   * Select all columns from the fuelingtruck table.
+   * Join the fuelingtruck table with the truckload table on the license plate.
+   * Filter the results to include only those records where the type of fuel matches the provided text parameter.
+   * Order the results by the last maintained date of the fueling trucks.
+3) Query: PREPARE get_gates_by_event_count (int) AS SELECT g.* FROM gate g WHERE (SELECT COUNT(*) FROM landingtakingoff l WHERE l.gatenumber = g.gatenumber AND l.location = g.location) > $1;
+   * Prepare a statement named get_gates_by_event_count that accepts an integer as a parameter.
+   * Select all columns from the gate table.
+   * Filter the results to include only those gates where the count of events (landings or takeoffs) associated with that gate is greater than the provided integer parameter.
+4) Query: PREPARE get_tugs_by_location_count_manufacturer (text) AS SELECT at.manufacturer, COUNT(*) FROM airplanetug at JOIN tugs t ON at.licensenumber = t.licensenumber WHERE t.location = $1 GROUP BY at.manufacturer ORDER BY at.manufacturer;
+   * Prepare a statement named get_tugs_by_location_count_manufacturer that accepts a text string as a parameter.
+   * Select the manufacturer of airplane tugs and the count of tugs for each manufacturer.
+   * Join the airplanetug table with the tugs table on the license number.
+   * Filter the results to include only those tugs located at the provided location parameter.
+   * Group the results by manufacturer.
+   * Order the results by manufacturer.
