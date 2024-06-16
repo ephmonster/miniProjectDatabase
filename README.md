@@ -82,33 +82,33 @@ The current ERD does not cover:
 #### Regular Queries
 ##### Select Queries
 1) Query: SELECT makeandmodel, COUNT(*) FROM airplane GROUP BY makeandmodel;
-  * Retrieve the make and model of each airplane.
-  * Count how many airplanes exist for each make and model.
-  * Group the results by the make and model.
+   * Retrieve the make and model of each airplane.
+   * Count how many airplanes exist for each make and model.
+   * Group the results by the make and model.
 2) Query: SELECT * FROM airplane ORDER BY datemanufactored;
-  * Select all columns from the airplane table.
-  * Sort the results by the date the airplanes were manufactured, in ascending order.
+   * Select all columns from the airplane table.
+   * Sort the results by the date the airplanes were manufactured, in ascending order.
 3) Query: SELECT serialnumber FROM public.airplane WHERE makeandmodel IN (SELECT makeandmodel FROM public.airplanetype WHERE makeandmodel LIKE 'Boeing%');
-  * Select the serial number of airplanes.
-  * Filter to include only those airplanes whose make and model match any make and model from the airplanetype table starting with 'Boeing'.
+   * Select the serial number of airplanes.
+   * Filter to include only those airplanes whose make and model match any make and model from the airplanetype table starting with 'Boeing'.
 4) Query: SELECT a.serialnumber, a.makeandmodel FROM airplane a INNER JOIN airplanetype b ON a.makeandmodel = b.makeandmodel WHERE b.range > 13000;
-  * Select the serial number and make and model of airplanes.
-  * Perform an inner join between the airplane and airplanetype tables based on matching make and model.
-  * Include only those airplanes where the range in the airplanetype table is greater than 13,000.
+   * Select the serial number and make and model of airplanes.
+   * Perform an inner join between the airplane and airplanetype tables based on matching make and model.
+   * Include only those airplanes where the range in the airplanetype table is greater than 13,000.
 ##### Update Queries
 5) Query: UPDATE airplanetype SET range = 10000 WHERE makeandmodel = 'Airbus A319';
-  * Update the range value in the airplanetype table.
-  * Set the range to 10,000 for all entries where the make and model is 'Airbus A319'.
+   * Update the range value in the airplanetype table.
+   * Set the range to 10,000 for all entries where the make and model is 'Airbus A319'.
 6) Query: UPDATE fueltype SET price = 5.0 WHERE typeoffuel = 'Avgas';
-  * Update the price in the fueltype table.
-  * Set the price to 5.0 for the fuel type 'Avgas'.
+   * Update the price in the fueltype table.
+   * Set the price to 5.0 for the fuel type 'Avgas'.
 ##### Delete Queries
 7) Query: DELETE FROM tugs WHERE date < CURRENT_DATE - INTERVAL '5 months';
-  * Delete entries from the tugs table.
-  * Remove records where the date is older than 5 months from the current date.
+   * Delete entries from the tugs table.
+   * Remove records where the date is older than 5 months from the current date.
 8) Query: DELETE FROM truckload WHERE date < CURRENT_DATE - INTERVAL '5 months';
-  * Delete entries from the truckload table.
-  * Remove records where the date is older than 5 months from the current date.
+   * Delete entries from the truckload table.
+   * Remove records where the date is older than 5 months from the current date.
 #### Parameterized Queries
 1) Query: PREPARE get_airplanes_by_date_location (date, text) AS SELECT a.* FROM airplane a JOIN landingtakingoff l ON a.serialnumber = l.serialnumber WHERE l.date = $1 AND l.location = $2;
    * Prepare a statement named get_airplanes_by_date_location that accepts a date and a text string as parameters.
