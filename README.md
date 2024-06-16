@@ -132,3 +132,11 @@ The current ERD does not cover:
    * Filter the results to include only those tugs located at the provided location parameter.
    * Group the results by manufacturer.
    * Order the results by manufacturer.
+
+
+####Timing
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
+| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
+| Row 3 Col 1 | Row 3 Col 2 | Row 3 Col 3 |
