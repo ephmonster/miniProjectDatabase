@@ -147,3 +147,13 @@ The current ERD does not cover:
 | 6 | 0.215 | 0.169 | |
 | 7 | 475.743 | 366.276 | |
 | 8 | 478.449 | 565.209 | |
+
+### Indexing
+Added in indexing for the dates of the flights, makeand model for the airplanes and the manufacturer of the airplane tugs.
+1) CREATE INDEX idx_landingtakingoff_date ON public.landingtakingoff (date);
+    * Index for the landingtakingoff table based on the date attribute
+3) CREATE INDEX idx_plane_makeandmodel ON public.airplane (makeandmodel);
+    * Index on the airplane table on the makeandmodel attribute
+5) CREATE INDEX idx_tug_makeandmodel ON  public.airplanetug (manufacturer);
+    * Index on the tug table on the manufacturer attribute
+
