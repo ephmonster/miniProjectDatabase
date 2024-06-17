@@ -1,0 +1,83 @@
+Query 1: Select the amount of planes of each makeandmodel there are.
+
+"HashAggregate  (cost=305.25..305.44 rows=20 width=20) (actual time=4.978..4.982 rows=20 loops=1)"
+"  Group Key: makeandmodel"
+"  Batches: 1  Memory Usage: 24kB"
+"  ->  Seq Scan on airplane  (cost=0.00..240.83 rows=12883 width=12) (actual time=0.113..1.466 rows=12883 loops=1)"
+"Planning Time: 1.721 ms"
+"Execution Time: 6.357 ms"
+
+Query 2: Select all planes in order of their manufacture date.
+
+"Sort  (cost=1120.30..1152.51 rows=12883 width=28) (actual time=5.734..7.214 rows=12883 loops=1)"
+"  Sort Key: datemanufactored"
+"  Sort Method: quicksort  Memory: 1104kB"
+"  ->  Seq Scan on airplane  (cost=0.00..240.83 rows=12883 width=28) (actual time=0.026..1.383 rows=12883 loops=1)"
+"Planning Time: 1.511 ms"
+"Execution Time: 7.828 ms"
+
+Query 3: Select the serial number of all airplanes produced by Boeing.
+
+"Hash Join  (cost=1.26..283.07 rows=644 width=4) (actual time=0.448..9.740 rows=3952 loops=1)"
+"  Hash Cond: ((airplane.makeandmodel)::text = (airplanetype.makeandmodel)::text)"
+"  ->  Seq Scan on airplane  (cost=0.00..240.83 rows=12883 width=16) (actual time=0.056..2.573 rows=12883 loops=1)"
+"  ->  Hash  (cost=1.25..1.25 rows=1 width=32) (actual time=0.376..0.377 rows=6 loops=1)"
+"        Buckets: 1024  Batches: 1  Memory Usage: 9kB"
+"        ->  Seq Scan on airplanetype  (cost=0.00..1.25 rows=1 width=32) (actual time=0.351..0.359 rows=6 loops=1)"
+"              Filter: ((makeandmodel)::text ~~ 'Boeing%'::text)"
+"              Rows Removed by Filter: 14"
+"Planning Time: 5.868 ms"
+"Execution Time: 10.075 ms"
+
+Query 4: Select all airplanes with a range of more than 1300km
+
+"Hash Join  (cost=1.34..283.15 rows=4509 width=16) (actual time=0.754..4.009 rows=1961 loops=1)"
+"  Hash Cond: ((a.makeandmodel)::text = (b.makeandmodel)::text)"
+"  ->  Seq Scan on airplane a  (cost=0.00..240.83 rows=12883 width=16) (actual time=0.486..1.499 rows=12883 loops=1)"
+"  ->  Hash  (cost=1.25..1.25 rows=7 width=32) (actual time=0.064..0.066 rows=3 loops=1)"
+"        Buckets: 1024  Batches: 1  Memory Usage: 9kB"
+"        ->  Seq Scan on airplanetype b  (cost=0.00..1.25 rows=7 width=32) (actual time=0.048..0.052 rows=3 loops=1)"
+"              Filter: (range > 13000)"
+"              Rows Removed by Filter: 17"
+"Planning Time: 1.278 ms"
+"Execution Time: 4.097 ms"
+
+Query 5: Update the range of the airbus A319 to 10000km
+
+"Update on airplanetype  (cost=0.00..1.25 rows=0 width=0) (actual time=2.957..2.957 rows=0 loops=1)"
+"  ->  Seq Scan on airplanetype  (cost=0.00..1.25 rows=1 width=10) (actual time=0.028..0.031 rows=1 loops=1)"
+"        Filter: ((makeandmodel)::text = 'Airbus A319'::text)"
+"        Rows Removed by Filter: 19"
+"Planning Time: 0.281 ms"
+"Execution Time: 6.655 ms"
+
+Query6: Update the fuel price of Avgas to $5
+
+"Update on fueltype  (cost=0.00..1.04 rows=0 width=0) (actual time=0.135..0.135 rows=0 loops=1)"
+"  ->  Seq Scan on fueltype  (cost=0.00..1.04 rows=1 width=14) (actual time=0.058..0.058 rows=1 loops=1)"
+"        Filter: ((typeoffuel)::text = 'Avgas'::text)"
+"        Rows Removed by Filter: 2"
+"Planning Time: 4.905 ms"
+"Execution Time: 0.215 ms"
+
+Query 7: Delete all tuggings (recordings of a tug tugging an airplane) that happened more than 5 months prior.\
+
+"Delete on tugs  (cost=0.00..4829.59 rows=0 width=0) (actual time=475.680..475.681 rows=0 loops=1)"
+"  ->  Seq Scan on tugs  (cost=0.00..4829.59 rows=20423 width=6) (actual time=1.005..183.058 rows=9967 loops=1)"
+"        Filter: (date < (CURRENT_DATE - '5 mons'::interval))"
+"        Rows Removed by Filter: 178632"
+"Planning Time: 3.598 ms"
+"Execution Time: 475.743 ms"
+
+Query 8: Delete all truck loads from more than 5 months ago
+
+"Delete on truckload  (cost=0.00..4973.59 rows=0 width=0) (actual time=478.365..478.366 rows=0 loops=1)"
+"  ->  Seq Scan on truckload  (cost=0.00..4973.59 rows=19703 width=6) (actual time=0.359..95.017 rows=21135 loops=1)"
+"        Filter: (date < (CURRENT_DATE - '5 mons'::interval))"
+"        Rows Removed by Filter: 178956"
+"Planning Time: 3.975 ms"
+"Execution Time: 478.449 ms"
+
+
+
+

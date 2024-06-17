@@ -1,0 +1,84 @@
+Query 1: Select the amount of planes of each makeandmodel there are.
+
+"HashAggregate  (cost=290.25..290.44 rows=20 width=20) (actual time=7.966..7.970 rows=20 loops=1)"
+"  Group Key: makeandmodel"
+"  Batches: 1  Memory Usage: 24kB"
+"  ->  Seq Scan on airplane  (cost=0.00..225.83 rows=12883 width=12) (actual time=0.021..1.322 rows=12883 loops=1)"
+"Planning Time: 1.901 ms"
+"Execution Time: 8.014 ms"
+
+Query 2: Select all planes in order of their manufacture date.
+
+"Sort  (cost=1105.30..1137.51 rows=12883 width=28) (actual time=5.410..6.845 rows=12883 loops=1)"
+"  Sort Key: datemanufactored"
+"  Sort Method: quicksort  Memory: 1104kB"
+"  ->  Seq Scan on airplane  (cost=0.00..225.83 rows=12883 width=28) (actual time=0.039..1.238 rows=12883 loops=1)"
+"Planning Time: 0.235 ms"
+"Execution Time: 7.749 ms"
+
+Query 3: Select the serial number of all airplanes produced by Boeing.
+
+"Nested Loop  (cost=9.28..122.02 rows=644 width=4) (actual time=0.482..2.008 rows=3952 loops=1)"
+"  ->  Seq Scan on airplanetype  (cost=0.00..1.25 rows=1 width=32) (actual time=0.031..0.038 rows=6 loops=1)"
+"        Filter: ((makeandmodel)::text ~~ 'Boeing%'::text)"
+"        Rows Removed by Filter: 14"
+"  ->  Bitmap Heap Scan on airplane  (cost=9.28..114.33 rows=644 width=16) (actual time=0.141..0.271 rows=659 loops=6)"
+"        Recheck Cond: ((makeandmodel)::text = (airplanetype.makeandmodel)::text)"
+"        Heap Blocks: exact=581"
+"        ->  Bitmap Index Scan on idx_plane_makeandmodel  (cost=0.00..9.12 rows=644 width=0) (actual time=0.130..0.130 rows=659 loops=6)"
+"              Index Cond: ((makeandmodel)::text = (airplanetype.makeandmodel)::text)"
+"Planning Time: 3.710 ms"
+"Execution Time: 2.511 ms"
+
+Query 4: Select all airplanes with a range of more than 1300km
+
+"Hash Join  (cost=1.34..268.15 rows=4509 width=16) (actual time=0.064..4.339 rows=1291 loops=1)"
+"  Hash Cond: ((a.makeandmodel)::text = (b.makeandmodel)::text)"
+"  ->  Seq Scan on airplane a  (cost=0.00..225.83 rows=12883 width=16) (actual time=0.023..1.196 rows=12883 loops=1)"
+"  ->  Hash  (cost=1.25..1.25 rows=7 width=32) (actual time=0.024..0.025 rows=2 loops=1)"
+"        Buckets: 1024  Batches: 1  Memory Usage: 9kB"
+"        ->  Seq Scan on airplanetype b  (cost=0.00..1.25 rows=7 width=32) (actual time=0.016..0.020 rows=2 loops=1)"
+"              Filter: (range > 13000)"
+"              Rows Removed by Filter: 18"
+"Planning Time: 0.304 ms"
+"Execution Time: 4.425 ms"
+
+Query 5: Update the range of the airbus A319 to 10000km
+
+"Update on airplanetype  (cost=0.00..1.25 rows=0 width=0) (actual time=1.242..1.243 rows=0 loops=1)"
+"  ->  Seq Scan on airplanetype  (cost=0.00..1.25 rows=1 width=10) (actual time=0.032..0.034 rows=1 loops=1)"
+"        Filter: ((makeandmodel)::text = 'Airbus A319'::text)"
+"        Rows Removed by Filter: 19"
+"Planning Time: 0.343 ms"
+"Execution Time: 2.460 ms"
+
+Query6: Update the fuel price of Avgas to $5
+
+"Update on fueltype  (cost=0.00..1.04 rows=0 width=0) (actual time=0.113..0.114 rows=0 loops=1)"
+"  ->  Seq Scan on fueltype  (cost=0.00..1.04 rows=1 width=14) (actual time=0.028..0.029 rows=1 loops=1)"
+"        Filter: ((typeoffuel)::text = 'Avgas'::text)"
+"        Rows Removed by Filter: 2"
+"Planning Time: 2.364 ms"
+"Execution Time: 0.169 ms"
+
+Query 7: Delete all tuggings (recordings of a tug tugging an airplane) that happened more than 5 months prior.\
+
+"Delete on tugs  (cost=0.00..4829.59 rows=0 width=0) (actual time=366.213..366.214 rows=0 loops=1)"
+"  ->  Seq Scan on tugs  (cost=0.00..4829.59 rows=20069 width=6) (actual time=0.034..69.087 rows=21459 loops=1)"
+"        Filter: (date < (CURRENT_DATE - '5 mons'::interval))"
+"        Rows Removed by Filter: 178632"
+"Planning Time: 4.647 ms"
+"Execution Time: 366.276 ms"
+
+Query 8: Delete all truck loads from more than 5 months ago
+
+"Delete on truckload  (cost=0.00..4973.59 rows=0 width=0) (actual time=565.164..565.164 rows=0 loops=1)"
+"  ->  Seq Scan on truckload  (cost=0.00..4973.59 rows=21827 width=6) (actual time=0.021..71.753 rows=21135 loops=1)"
+"        Filter: (date < (CURRENT_DATE - '5 mons'::interval))"
+"        Rows Removed by Filter: 178956"
+"Planning Time: 1.515 ms"
+"Execution Time: 565.209 ms"
+
+
+
+
