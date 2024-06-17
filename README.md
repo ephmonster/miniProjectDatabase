@@ -134,9 +134,14 @@ The current ERD does not cover:
    * Order the results by manufacturer.
 
 
-####Timing
-| Header 1 | Header 2 | Header 3 |
+#### Timing
+| Query Number | RunTime No Indexing | Runtime with Indexing |
 |----------|----------|----------|
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
-| Row 3 Col 1 | Row 3 Col 2 | Row 3 Col 3 |
+| 1 | 6.357 | 8.014 |
+| 2 | 7.828 | 7.749 |
+| 3 | 10.075 | 2.511 |
+| 4 | 4.097 | 4.425 |
+| 5 | 6.655 | 2.460 |
+| 6 | 0.215 | 0.169 |
+| 7 | 475.743 | 366.276 |
+| 8 | 478.449 | 565.209 |
