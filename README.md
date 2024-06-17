@@ -79,7 +79,7 @@ The current ERD does not cover:
 #### Data Dump Command
 
 ### Queries
-#### Regular Queries
+#### [Regular Queries](Queries.sql)
 ##### Select Queries
 1) Query: SELECT makeandmodel, COUNT(*) FROM airplane GROUP BY makeandmodel;
    * Retrieve the make and model of each airplane.
@@ -156,4 +156,6 @@ Added in indexing for the dates of the flights, makeand model for the airplanes 
     * Index on the airplane table on the makeandmodel attribute
 5) CREATE INDEX idx_tug_makeandmodel ON  public.airplanetug (manufacturer);
     * Index on the tug table on the manufacturer attribute
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/6348251f-52e9-40f4-aa49-d71acfc2a5c1)
+
 
