@@ -48,7 +48,7 @@ The current ERD does not cover:
 
 ![Screenshot (5)](https://github.com/ephmonster/miniProjectDatabase/assets/71876859/64b1450f-40db-4297-8d74-118eaba3543e)
 
-### Data Generation
+### [Data Generation](airplane_equipment_data_generation.py)
 #### Amount of Data
   1) Airplane Type:  20 different types of planes with varying manufacturers and Make and Models
   2) Airplane: 12884, each plane is a type of 'Airplane Type'
@@ -76,7 +76,7 @@ The current ERD does not cover:
 
 ### Backups
 
-#### Data Dump Command
+#### [Data Dump Command](DumpScript)
 
 ### Queries
 #### [Regular Queries](Queries.sql)
@@ -109,7 +109,7 @@ The current ERD does not cover:
 8) Query: DELETE FROM truckload WHERE date < CURRENT_DATE - INTERVAL '5 months';
    * Delete entries from the truckload table.
    * Remove records where the date is older than 5 months from the current date.
-#### Parameterized Queries
+#### [Parameterized Queries](ParamQueries.sql)
 1) Query: PREPARE get_airplanes_by_date_location (date, text) AS SELECT a.* FROM airplane a JOIN landingtakingoff l ON a.serialnumber = l.serialnumber WHERE l.date = $1 AND l.location = $2;
    * Prepare a statement named get_airplanes_by_date_location that accepts a date and a text string as parameters.
    * Select all columns from the airplane table.
@@ -137,7 +137,7 @@ The current ERD does not cover:
 
 
 #### Timing
-| Query Number | RunTime No Indexing | Runtime with Indexing | Relevant Index|
+| Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
 |----------|----------|----------|----------|
 | 1 | 6.357 | 8.014 | |
 | 2 | 7.828 | 7.749 | |
@@ -148,7 +148,7 @@ The current ERD does not cover:
 | 7 | 475.743 | 366.276 | |
 | 8 | 478.449 | 565.209 | |
 
-### Indexing
+### [Indexing](Indexes.sql)
 Added in indexing for the dates of the flights, makeand model for the airplanes and the manufacturer of the airplane tugs.
 1) CREATE INDEX idx_landingtakingoff_date ON public.landingtakingoff (date);
     * Index for the landingtakingoff table based on the date attribute
