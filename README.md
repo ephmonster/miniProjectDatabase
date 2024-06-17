@@ -135,13 +135,13 @@ The current ERD does not cover:
 
 
 #### Timing
-| Query Number | RunTime No Indexing | Runtime with Indexing |
-|----------|----------|----------|
-| 1 | 6.357 | 8.014 |
-| 2 | 7.828 | 7.749 |
-| 3 | 10.075 | 2.511 |
-| 4 | 4.097 | 4.425 |
-| 5 | 6.655 | 2.460 |
-| 6 | 0.215 | 0.169 |
-| 7 | 475.743 | 366.276 |
-| 8 | 478.449 | 565.209 |
+| Query Number | RunTime No Indexing | Runtime with Indexing | Relevant Index|
+|----------|----------|----------|----------|
+| 1 | 6.357 | 8.014 | |
+| 2 | 7.828 | 7.749 | |
+| 3 | 10.075 | 2.511 | idx_plane_makeandmodel | 
+| 4 | 4.097 | 4.425 | idx_tug_makeandmodel | 
+| 5 | 6.655 | 2.460 | idx_plane_makeandmodel |
+| 6 | 0.215 | 0.169 | |
+| 7 | 475.743 | 366.276 | |
+| 8 | 478.449 | 565.209 | |
