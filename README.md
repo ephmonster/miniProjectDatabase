@@ -133,6 +133,8 @@ The current ERD does not cover:
    * Group the results by manufacturer.
    * Order the results by manufacturer.
 
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/477b32de-e184-4eaf-a519-15b977ac8799)
+
 
 #### Timing
 | Query Number | RunTime No Indexing | Runtime with Indexing | Relevant Index|
