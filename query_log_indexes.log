@@ -63,21 +63,25 @@ Query6: Update the fuel price of Avgas to $5
 
 Query 7: Delete all tuggings (recordings of a tug tugging an airplane) that happened more than 5 months prior.\
 
-"Delete on tugs  (cost=0.00..4829.59 rows=0 width=0) (actual time=366.213..366.214 rows=0 loops=1)"
-"  ->  Seq Scan on tugs  (cost=0.00..4829.59 rows=20069 width=6) (actual time=0.034..69.087 rows=21459 loops=1)"
-"        Filter: (date < (CURRENT_DATE - '5 mons'::interval))"
-"        Rows Removed by Filter: 178632"
-"Planning Time: 4.647 ms"
-"Execution Time: 366.276 ms"
+"Delete on tugs  (cost=274.09..2021.62 rows=0 width=0) (actual time=35.068..35.069 rows=0 loops=1)"
+"  ->  Bitmap Heap Scan on tugs  (cost=274.09..2021.62 rows=23973 width=6) (actual time=2.030..12.278 rows=24287 loops=1)"
+"        Recheck Cond: (date < (CURRENT_DATE - '5 mons'::interval))"
+"        Heap Blocks: exact=1322"
+"        ->  Bitmap Index Scan on idx_tugs_date  (cost=0.00..268.10 rows=23973 width=0) (actual time=1.798..1.798 rows=24287 loops=1)"
+"              Index Cond: (date < (CURRENT_DATE - '5 mons'::interval))"
+"Planning Time: 0.202 ms"
+"Execution Time: 35.131 ms"
 
 Query 8: Delete all truck loads from more than 5 months ago
 
-"Delete on truckload  (cost=0.00..4973.59 rows=0 width=0) (actual time=565.164..565.164 rows=0 loops=1)"
-"  ->  Seq Scan on truckload  (cost=0.00..4973.59 rows=21827 width=6) (actual time=0.021..71.753 rows=21135 loops=1)"
-"        Filter: (date < (CURRENT_DATE - '5 mons'::interval))"
-"        Rows Removed by Filter: 178956"
-"Planning Time: 1.515 ms"
-"Execution Time: 565.209 ms"
+"Delete on truckload  (cost=272.46..2160.32 rows=0 width=0) (actual time=234.907..234.908 rows=0 loops=1)"
+"  ->  Bitmap Heap Scan on truckload  (cost=272.46..2160.32 rows=23763 width=6) (actual time=3.272..24.820 rows=23933 loops=1)"
+"        Recheck Cond: (date < (CURRENT_DATE - '5 mons'::interval))"
+"        Heap Blocks: exact=1455"
+"        ->  Bitmap Index Scan on idx_truckload_date  (cost=0.00..266.52 rows=23763 width=0) (actual time=2.822..2.823 rows=23933 loops=1)"
+"              Index Cond: (date < (CURRENT_DATE - '5 mons'::interval))"
+"Planning Time: 6.334 ms"
+"Execution Time: 235.077 ms"
 
 
 
