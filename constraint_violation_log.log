@@ -1,0 +1,29 @@
+Query 1: violates constraint that maxspeed cannot be more than 1000
+
+ERROR:  Failing row contains (Boeing747, 200, 1500, 5000, 30, JetA, 50000).new row for relation "airplanetype" violates check constraint "maxspeed_check" 
+
+ERROR:  new row for relation "airplanetype" violates check constraint "maxspeed_check"
+SQL state: 23514
+Detail: Failing row contains (Boeing747, 200, 1500, 5000, 30, JetA, 50000).
+
+Query 2: violate constrain that fueltype must be only one of three types
+ERROR:  Failing row contains (JetFuel, 2.5).new row for relation "fueltype" violates check constraint "fueltype_allowed_types" 
+
+ERROR:  new row for relation "fueltype" violates check constraint "fueltype_allowed_types"
+SQL state: 23514
+Detail: Failing row contains (JetFuel, 2.5).
+
+Query 3: violates constraint that in-service can only take on Boolean values 1 and 0
+ERROR:  Failing row contains (1, 2013-01-28, 2014-11-11, 2, Bombardier Q400).new row for relation "airplane" violates check constraint "in_service_check" 
+
+ERROR:  new row for relation "airplane" violates check constraint "in_service_check"
+SQL state: 23514
+Detail: Failing row contains (1, 2013-01-28, 2014-11-11, 2, Bombardier Q400).
+
+Query 4: violates constraint for amount of permitted fuel in fuelstock
+ERROR:  Failing row contains (2000000, LAX, JetA).new row for relation "fuelstock" violates check constraint "fuelstock_liters_check" 
+
+ERROR:  new row for relation "fuelstock" violates check constraint "fuelstock_liters_check"
+SQL state: 23514
+Detail: Failing row contains (2000000, LAX, JetA).
+
