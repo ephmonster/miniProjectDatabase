@@ -154,10 +154,10 @@ We backed up our queries and restored the database using both COPY and INSERT an
 ##### Parameterized Query Timing
 | Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
 |----------|----------|----------|----------|
-| 1 | 334.783 | 8.014 | |
-| 2 | 128.580 | 7.749 | |
-| 3 | 8651.190 | 2.511 | | 
-| 4 | 3.947 | 4.425 | idx_tug_makeandmodel |
+| 1 | 334.783 | 10.426 | |
+| 2 | 128.580 | 153.988 | |
+| 3 | 8651.190 | 13440.933 | | 
+| 4 | 3.947 | 1.755 | idx_tug_makeandmodel |
 
 ### [Indexing](Indexes.sql)
 Added in indexing for the dates of the flights, makeand model for the airplanes and the manufacturer of the airplane tugs.
