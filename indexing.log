@@ -12,3 +12,22 @@
 3) CREATE INDEX idx_tug_makeandmodel ON public.airplanetug (manufacturer);
 2024-06-17 23:31:41 IDT [8340]: [234-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_tug_makeandmodel ON public.airplanetug (manufacturer)
 2024-06-17 23:31:41 IDT [8340]: [235-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 23.983 ms
+4)CREATE INDEX idx_truckload_date_typeoffuel ON truckload (date, typeoffuel);
+2024-06-18 22:53:21 IDT [13796]: [13-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_truckload_date ON truckload (date);	
+2024-06-18 22:53:21 IDT [13796]: [14-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 625.402 ms
+2024-06-18 22:54:22 IDT [13796]: [15-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_truckload_date_typeoffuel ON 
+	truckload (date, typeoffuel);
+2024-06-18 22:54:23 IDT [13796]: [16-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 835.372 ms
+
+5) CREATE INDEX idx_landingtakingoff_number_location ON landingtakingoff (number, location);
+2024-06-18 22:54:42 IDT [13796]: [17-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_landingtakingoff_number_location ON 
+	landingtakingoff (number, location);
+2024-06-18 22:54:44 IDT [13796]: [18-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 1766.504 ms
+6) CREATE INDEX idx_tugs_date ON tugs (date);
+2024-06-18 22:43:54 IDT [13796]: [10-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 11.381 ms
+2024-06-18 22:43:54 IDT [13796]: [11-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_tugs_date ON tugs (date);
+2024-06-18 22:43:54 IDT [13796]: [12-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 491.766 ms
+7) CREATE INDEX idx_truckload_date ON truckload (date);
+2024-06-18 22:53:21 IDT [13796]: [13-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_truckload_date ON truckload (date);
+2024-06-18 22:53:21 IDT [13796]: [14-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 625.402 ms
+
