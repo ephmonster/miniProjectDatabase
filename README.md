@@ -171,18 +171,22 @@ pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "Mini
 | Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
 |----------|----------|----------|----------|
 | 1 | 334.783 | 10.426 | |
-| 2 | 128.580 | 153.988 | |
-| 3 | 8651.190 | 13440.933 | | 
+| 2 | 128.580 | 4.395 | |
+| 3 | 8651.190 | 128.010 | | 
 | 4 | 3.947 | 1.755 | idx_tug_makeandmodel |
 
 ### [Indexing](Indexes.sql)
 Added in indexing for the dates of the flights, makeand model for the airplanes and the manufacturer of the airplane tugs.
 1) CREATE INDEX idx_landingtakingoff_date ON public.landingtakingoff (date);
     * Index for the landingtakingoff table based on the date attribute
-3) CREATE INDEX idx_plane_makeandmodel ON public.airplane (makeandmodel);
+2) CREATE INDEX idx_plane_makeandmodel ON public.airplane (makeandmodel);
     * Index on the airplane table on the makeandmodel attribute
-5) CREATE INDEX idx_tug_makeandmodel ON  public.airplanetug (manufacturer);
+3) CREATE INDEX idx_tug_makeandmodel ON  public.airplanetug (manufacturer);
     * Index on the tug table on the manufacturer attribute
+4) CREATE INDEX idx_truckload_date_typeoffuel ON truckload (date, typeoffuel);
+    * Index on the the truckloads by date and type of fuel
+5) CREATE INDEX idx_landingtakingoff_number_location ON landingtakingoff (number, location);
+    * Index on the landing takeoff by location and runway number
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/6348251f-52e9-40f4-aa49-d71acfc2a5c1)
 
 #### Constraints
