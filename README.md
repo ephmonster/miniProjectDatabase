@@ -78,6 +78,12 @@ The current ERD does not cover:
 
 #### [Data Dump Command](DumpScript)
 
+We backed up our queries and restored the database using text-base dump as well as the dump command and we logged the responses:
+#### [BackupSQL](backupSQL.sql)
+#### [BackupSQLlog](backupSQL.log)
+#### [BackupPSQL](backupPSQL.sql)
+#### [BackupPSQLlog](backupPSQL.log)
+
 ### Queries
 #### [Regular Queries](Queries.sql)
 ##### Select Queries
@@ -110,6 +116,7 @@ The current ERD does not cover:
    * Delete entries from the truckload table.
    * Remove records where the date is older than 5 months from the current date.
 #### [Parameterized Queries](ParamQueries.sql)
+#### [ParamQuery logs](param_query_log.log)
 1) Query: PREPARE get_airplanes_by_date_location (date, text) AS SELECT a.* FROM airplane a JOIN landingtakingoff l ON a.serialnumber = l.serialnumber WHERE l.date = $1 AND l.location = $2;
    * Prepare a statement named get_airplanes_by_date_location that accepts a date and a text string as parameters.
    * Select all columns from the airplane table.
@@ -124,7 +131,6 @@ The current ERD does not cover:
 4) PREPARE get_tugs_by_location_count_manufacturer (text) AS SELECT at.manufacturer, COUNT(*) FROM airplanetug at WHERE at.location = $1 GROUP BY at.manufacturer ORDER BY at.manufacturer;
    * Prepare a statement named get_tugs_by_location_count_manufacturer that accepts a text string as a parameter and retuns all the manufacturer's which have tugs at the given location, with the number of tugs per manufacturer, and is ordered
 
-[ParamQueries.sql](ParamQueries.sql)
 
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/477b32de-e184-4eaf-a519-15b977ac8799)
 
@@ -150,5 +156,24 @@ Added in indexing for the dates of the flights, makeand model for the airplanes 
 5) CREATE INDEX idx_tug_makeandmodel ON  public.airplanetug (manufacturer);
     * Index on the tug table on the manufacturer attribute
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/6348251f-52e9-40f4-aa49-d71acfc2a5c1)
+
+#### Constraints
+We added the following constraints:
+1) A constraint on the speed for an airplane
+2) A constraint on the fueltype
+3) A constraint on the in service column, requiring a boolean 1 or 0
+4) A constrain on the amount of fuel in a fuel stock
+
+Here is the sql for the constraints:
+#### [Constraints](Constraints.sql)
+We wrote the following queries which violated the constraints:
+1) we inserted an airplane with a speed above the max
+2) we insert fuel into fueltype which was not one of the allowed types
+3) we put a 2, which is not a 0 or 1 into the in service column
+4) we inserted more fuel than allowed into the fuel stock
+Here is the sql for the violating queries:
+#### [Violations](constraint_violations.sql)
+Here is the log for the errors for the above queries:
+#### [ErrorLogs](constraint_violation_log.log)
 
 
