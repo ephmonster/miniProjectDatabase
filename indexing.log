@@ -1,0 +1,14 @@
+
+1) CREATE INDEX idx_landingtakingoff_date ON public.landingtakingoff (date);
+2024-06-17 23:37:59 IDT [8340]: [238-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: 	CREATE INDEX idx_landingtakingoff_date
+	ON public.landingtakingoff (date);	
+2024-06-17 23:37:59 IDT [8340]: [239-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 884.205 ms
+
+2) CREATE INDEX idx_plane_makeandmodel ON public.airplane (makeandmodel);
+2024-06-17 23:29:00 IDT [8340]: [232-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_plane_makeandmodel ON 
+	public.airplane (makeandmodel);
+2024-06-17 23:29:00 IDT [8340]: [233-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 83.911 ms
+
+3) CREATE INDEX idx_tug_makeandmodel ON public.airplanetug (manufacturer);
+2024-06-17 23:31:41 IDT [8340]: [234-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  statement: CREATE INDEX idx_tug_makeandmodel ON public.airplanetug (manufacturer)
+2024-06-17 23:31:41 IDT [8340]: [235-1] user=postgres,db=airplane_equipment,app=pgAdmin 4 - CONN:3724381,client=::1 LOG:  duration: 23.983 ms
