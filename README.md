@@ -115,23 +115,16 @@ The current ERD does not cover:
    * Select all columns from the airplane table.
    * Join the airplane table with the landingtakingoff table on the serial number.
    * Filter the results to include only those records where the date matches the provided date parameter and the location matches the provided text parameter.
-2) PREPARE get_fueling_trucks_by_fuel (text) AS SELECT f.* FROM fuelingtruck f JOIN truckload t ON f.licenseplate = t.licenseplate WHERE t.typeoffuel = $1 ORDER BY f.lastmaintained;
-   * Prepare a statement named get_fueling_trucks_by_fuel that accepts a text string as a parameter.
-   * Select all columns from the fuelingtruck table.
-   * Join the fuelingtruck table with the truckload table on the license plate.
-   * Filter the results to include only those records where the type of fuel matches the provided text parameter.
-   * Order the results by the last maintained date of the fueling trucks.
-3) Query: PREPARE get_gates_by_event_count (int) AS SELECT g.* FROM gate g WHERE (SELECT COUNT(*) FROM landingtakingoff l WHERE l.gatenumber = g.gatenumber AND l.location = g.location) > $1;
-   * Prepare a statement named get_gates_by_event_count that accepts an integer as a parameter.
-   * Select all columns from the gate table.
-   * Filter the results to include only those gates where the count of events (landings or takeoffs) associated with that gate is greater than the provided integer parameter.
-4) Query: PREPARE get_tugs_by_location_count_manufacturer (text) AS SELECT at.manufacturer, COUNT(*) FROM airplanetug at JOIN tugs t ON at.licensenumber = t.licensenumber WHERE t.location = $1 GROUP BY at.manufacturer ORDER BY at.manufacturer;
-   * Prepare a statement named get_tugs_by_location_count_manufacturer that accepts a text string as a parameter.
-   * Select the manufacturer of airplane tugs and the count of tugs for each manufacturer.
-   * Join the airplanetug table with the tugs table on the license number.
-   * Filter the results to include only those tugs located at the provided location parameter.
-   * Group the results by manufacturer.
-   * Order the results by manufacturer.
+2) PREPARE get_fueling_trucks_by_fuelDate (date, text) AS SELECT t.* FROM truckload t WHERE t.date = $1 AND t.typeoffuel = $2;
+   * Prepare a statement that accepts a data and a fueltype
+   * It selects all truckloads of a certain fuel type on a certain date
+3) PREPARE get_runways_by_event_count (int) AS SELECT r.* FROM runway r WHERE (SELECT COUNT(*) FROM landingtakingoff l WHERE l.number = r.number AND l.location r.location) > $1
+   * Prepare a statement named get_runways_by_event_count that accepts an integer as a parameter.
+   * Gets all runways with more than the parameter given of landings/ takeoffs
+4) PREPARE get_tugs_by_location_count_manufacturer (text) AS SELECT at.manufacturer, COUNT(*) FROM airplanetug at WHERE at.location = $1 GROUP BY at.manufacturer ORDER BY at.manufacturer;
+   * Prepare a statement named get_tugs_by_location_count_manufacturer that accepts a text string as a parameter and retuns all the manufacturer's which have tugs at the given location, with the number of tugs per manufacturer, and is ordered
+
+[ParamQueries.sql](ParamQueries.sql)
 
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/477b32de-e184-4eaf-a519-15b977ac8799)
 
