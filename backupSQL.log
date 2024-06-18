@@ -45,100 +45,102 @@ pg_dump: reading large objects
 pg_dump: reading dependency data
 pg_dump: saving encoding = UTF8
 pg_dump: saving standard_conforming_strings = on
-pg_dump: saving search_path = 
-pg_dump: dropping FK CONSTRAINT tugs tugs_fk2
-pg_dump: dropping FK CONSTRAINT tugs tugs_fk1
-pg_dump: dropping FK CONSTRAINT truckload truckload_fk2
-pg_dump: dropping FK CONSTRAINT truckload truckload_fk1
-pg_dump: dropping FK CONSTRAINT landingtakingoff runway_fkey
-pg_dump: dropping FK CONSTRAINT landingtakingoff landingtakingoff_serialnumber_fkey
-pg_dump: dropping FK CONSTRAINT jetbridge jetbridge_gatenumber_location_fkey
-pg_dump: dropping FK CONSTRAINT airplanetype fueltype_fkey
-pg_dump: dropping FK CONSTRAINT fuelstock fuelstock_typeoffuel_fkey
-pg_dump: dropping FK CONSTRAINT airplane airplane_makeandmodel_fkey
-pg_dump: dropping CONSTRAINT tugs tugs_pkey
-pg_dump: dropping CONSTRAINT truckload truckload_pkey
-pg_dump: dropping CONSTRAINT runway runway_pkey
-pg_dump: dropping CONSTRAINT landingtakingoff landingtakingoff_pkey
-pg_dump: dropping CONSTRAINT jetbridge jetbridge_pkey
-pg_dump: dropping CONSTRAINT gate gate_pkey
-pg_dump: dropping CONSTRAINT fueltype fueltype_pkey
-pg_dump: dropping CONSTRAINT fuelstock fuelstock_pkey
-pg_dump: dropping CONSTRAINT fuelingtruck fuelingtruck_pkey
-pg_dump: dropping CONSTRAINT airplanetype airplanetype_pkey
-pg_dump: dropping CONSTRAINT airplanetug airplanetug_pkey
-pg_dump: dropping CONSTRAINT airplane airplane_pkey
-pg_dump: dropping TABLE tugs
-pg_dump: dropping TABLE truckload
-pg_dump: dropping TABLE runway
-pg_dump: dropping TABLE landingtakingoff
-pg_dump: dropping TABLE jetbridge
-pg_dump: dropping TABLE gate
-pg_dump: dropping TABLE fueltype
-pg_dump: dropping TABLE fuelstock
-pg_dump: dropping TABLE fuelingtruck
-pg_dump: dropping TABLE airplanetype
-pg_dump: dropping TABLE airplanetug
-pg_dump: dropping TABLE airplane
-pg_dump: dropping SCHEMA public
-pg_dump: creating SCHEMA "public"
-pg_dump: creating COMMENT "SCHEMA public"
-pg_dump: creating TABLE "public.airplane"
-pg_dump: creating TABLE "public.airplanetug"
-pg_dump: creating TABLE "public.airplanetype"
-pg_dump: creating TABLE "public.fuelingtruck"
-pg_dump: creating TABLE "public.fuelstock"
-pg_dump: creating TABLE "public.fueltype"
-pg_dump: creating TABLE "public.gate"
-pg_dump: creating TABLE "public.jetbridge"
-pg_dump: creating TABLE "public.landingtakingoff"
-pg_dump: creating TABLE "public.runway"
-pg_dump: creating TABLE "public.truckload"
-pg_dump: creating TABLE "public.tugs"
-pg_dump: processing data for table "public.airplane"
+pg_dump: saving search_path =
+pg_dump: saving database definition
 pg_dump: dumping contents of table "public.airplane"
-pg_dump: processing data for table "public.airplanetug"
 pg_dump: dumping contents of table "public.airplanetug"
-pg_dump: processing data for table "public.airplanetype"
 pg_dump: dumping contents of table "public.airplanetype"
-pg_dump: processing data for table "public.fuelingtruck"
 pg_dump: dumping contents of table "public.fuelingtruck"
-pg_dump: processing data for table "public.fuelstock"
 pg_dump: dumping contents of table "public.fuelstock"
-pg_dump: processing data for table "public.fueltype"
 pg_dump: dumping contents of table "public.fueltype"
-pg_dump: processing data for table "public.gate"
 pg_dump: dumping contents of table "public.gate"
-pg_dump: processing data for table "public.jetbridge"
 pg_dump: dumping contents of table "public.jetbridge"
-pg_dump: processing data for table "public.landingtakingoff"
 pg_dump: dumping contents of table "public.landingtakingoff"
-pg_dump: processing data for table "public.runway"
 pg_dump: dumping contents of table "public.runway"
-pg_dump: processing data for table "public.truckload"
 pg_dump: dumping contents of table "public.truckload"
-pg_dump: processing data for table "public.tugs"
 pg_dump: dumping contents of table "public.tugs"
-pg_dump: creating CONSTRAINT "public.airplane airplane_pkey"
-pg_dump: creating CONSTRAINT "public.airplanetug airplanetug_pkey"
-pg_dump: creating CONSTRAINT "public.airplanetype airplanetype_pkey"
-pg_dump: creating CONSTRAINT "public.fuelingtruck fuelingtruck_pkey"
-pg_dump: creating CONSTRAINT "public.fuelstock fuelstock_pkey"
-pg_dump: creating CONSTRAINT "public.fueltype fueltype_pkey"
-pg_dump: creating CONSTRAINT "public.gate gate_pkey"
-pg_dump: creating CONSTRAINT "public.jetbridge jetbridge_pkey"
-pg_dump: creating CONSTRAINT "public.landingtakingoff landingtakingoff_pkey"
-pg_dump: creating CONSTRAINT "public.runway runway_pkey"
-pg_dump: creating CONSTRAINT "public.truckload truckload_pkey"
-pg_dump: creating CONSTRAINT "public.tugs tugs_pkey"
-pg_dump: creating FK CONSTRAINT "public.airplane airplane_makeandmodel_fkey"
-pg_dump: creating FK CONSTRAINT "public.fuelstock fuelstock_typeoffuel_fkey"
-pg_dump: creating FK CONSTRAINT "public.airplanetype fueltype_fkey"
-pg_dump: creating FK CONSTRAINT "public.jetbridge jetbridge_gatenumber_location_fkey"
-pg_dump: creating FK CONSTRAINT "public.landingtakingoff landingtakingoff_serialnumber_fkey"
-pg_dump: creating FK CONSTRAINT "public.landingtakingoff runway_fkey"
-pg_dump: creating FK CONSTRAINT "public.truckload truckload_fk1"
-pg_dump: creating FK CONSTRAINT "public.truckload truckload_fk2"
-pg_dump: creating FK CONSTRAINT "public.tugs tugs_fk1"
-pg_dump: creating FK CONSTRAINT "public.tugs tugs_fk2"
-pg_dump: creating ACL "SCHEMA public"
+
+pg_restore: dropping FK CONSTRAINT tugs tugs_fk2
+pg_restore: dropping FK CONSTRAINT tugs tugs_fk1
+pg_restore: dropping FK CONSTRAINT truckload truckload_fk2
+pg_restore: dropping FK CONSTRAINT truckload truckload_fk1
+pg_restore: dropping FK CONSTRAINT landingtakingoff runway_fkey
+pg_restore: dropping FK CONSTRAINT landingtakingoff landingtakingoff_serialnumber_fkey
+pg_restore: dropping FK CONSTRAINT jetbridge jetbridge_gatenumber_location_fkey
+pg_restore: dropping FK CONSTRAINT airplanetype fueltype_fkey
+pg_restore: dropping FK CONSTRAINT fuelstock fuelstock_typeoffuel_fkey
+pg_restore: dropping FK CONSTRAINT airplane airplane_makeandmodel_fkey
+pg_restore: dropping CONSTRAINT tugs tugs_pkey
+pg_restore: dropping CONSTRAINT truckload truckload_pkey
+pg_restore: dropping CONSTRAINT runway runway_pkey
+pg_restore: dropping CONSTRAINT landingtakingoff landingtakingoff_pkey
+pg_restore: dropping CONSTRAINT jetbridge jetbridge_pkey
+pg_restore: dropping CONSTRAINT gate gate_pkey
+pg_restore: dropping CONSTRAINT fueltype fueltype_pkey
+pg_restore: dropping CONSTRAINT fuelstock fuelstock_pkey
+pg_restore: dropping CONSTRAINT fuelingtruck fuelingtruck_pkey
+pg_restore: dropping CONSTRAINT airplanetype airplanetype_pkey
+pg_restore: dropping CONSTRAINT airplanetug airplanetug_pkey
+pg_restore: dropping CONSTRAINT airplane airplane_pkey
+pg_restore: dropping TABLE tugs
+pg_restore: dropping TABLE truckload
+pg_restore: dropping TABLE runway
+pg_restore: dropping TABLE landingtakingoff
+pg_restore: dropping TABLE jetbridge
+pg_restore: dropping TABLE gate
+pg_restore: dropping TABLE fueltype
+pg_restore: dropping TABLE fuelstock
+pg_restore: dropping TABLE fuelingtruck
+pg_restore: dropping TABLE airplanetype
+pg_restore: dropping TABLE airplanetug
+pg_restore: dropping TABLE airplane
+pg_restore: dropping SCHEMA public
+pg_restore: creating SCHEMA "public"
+pg_restore: creating COMMENT "SCHEMA public"
+pg_restore: creating TABLE "public.airplane"
+pg_restore: creating TABLE "public.airplanetug"
+pg_restore: creating TABLE "public.airplanetype"
+pg_restore: creating TABLE "public.fuelingtruck"
+pg_restore: creating TABLE "public.fuelstock"
+pg_restore: creating TABLE "public.fueltype"
+pg_restore: creating TABLE "public.gate"
+pg_restore: creating TABLE "public.jetbridge"
+pg_restore: creating TABLE "public.landingtakingoff"
+pg_restore: creating TABLE "public.runway"
+pg_restore: creating TABLE "public.truckload"
+pg_restore: creating TABLE "public.tugs"
+pg_restore: processing data for table "public.airplane"
+pg_restore: processing data for table "public.airplanetug"
+pg_restore: processing data for table "public.airplanetype"
+pg_restore: processing data for table "public.fuelingtruck"
+pg_restore: processing data for table "public.fuelstock"
+pg_restore: processing data for table "public.fueltype"
+pg_restore: processing data for table "public.gate"
+pg_restore: processing data for table "public.jetbridge"
+pg_restore: processing data for table "public.landingtakingoff"
+pg_restore: processing data for table "public.runway"
+pg_restore: processing data for table "public.truckload"
+pg_restore: processing data for table "public.tugs"
+pg_restore: creating CONSTRAINT "public.airplane airplane_pkey"
+pg_restore: creating CONSTRAINT "public.airplanetug airplanetug_pkey"
+pg_restore: creating CONSTRAINT "public.airplanetype airplanetype_pkey"
+pg_restore: creating CONSTRAINT "public.fuelingtruck fuelingtruck_pkey"
+pg_restore: creating CONSTRAINT "public.fuelstock fuelstock_pkey"
+pg_restore: creating CONSTRAINT "public.fueltype fueltype_pkey"
+pg_restore: creating CONSTRAINT "public.gate gate_pkey"
+pg_restore: creating CONSTRAINT "public.jetbridge jetbridge_pkey"
+pg_restore: creating CONSTRAINT "public.landingtakingoff landingtakingoff_pkey"
+pg_restore: creating CONSTRAINT "public.runway runway_pkey"
+pg_restore: creating CONSTRAINT "public.truckload truckload_pkey"
+pg_restore: creating CONSTRAINT "public.tugs tugs_pkey"
+pg_restore: creating FK CONSTRAINT "public.airplane airplane_makeandmodel_fkey"
+pg_restore: creating FK CONSTRAINT "public.fuelstock fuelstock_typeoffuel_fkey"
+pg_restore: creating FK CONSTRAINT "public.airplanetype fueltype_fkey"
+pg_restore: creating FK CONSTRAINT "public.jetbridge jetbridge_gatenumber_location_fkey"
+pg_restore: creating FK CONSTRAINT "public.landingtakingoff landingtakingoff_serialnumber_fkey"
+pg_restore: creating FK CONSTRAINT "public.landingtakingoff runway_fkey"
+pg_restore: creating FK CONSTRAINT "public.truckload truckload_fk1"
+pg_restore: creating FK CONSTRAINT "public.truckload truckload_fk2"
+pg_restore: creating FK CONSTRAINT "public.tugs tugs_fk1"
+pg_restore: creating FK CONSTRAINT "public.tugs tugs_fk2"
+pg_restore: creating ACL "SCHEMA public"

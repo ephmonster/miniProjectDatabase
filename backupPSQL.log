@@ -45,21 +45,9 @@ pg_dump: reading large objects
 pg_dump: reading dependency data
 pg_dump: saving encoding = UTF8
 pg_dump: saving standard_conforming_strings = on
-pg_dump: saving search_path = 
-pg_dump: saving database definition
-pg_dump: dumping contents of table "public.airplane"
-pg_dump: dumping contents of table "public.airplanetug"
-pg_dump: dumping contents of table "public.airplanetype"
-pg_dump: dumping contents of table "public.fuelingtruck"
-pg_dump: dumping contents of table "public.fuelstock"
-pg_dump: dumping contents of table "public.fueltype"
-pg_dump: dumping contents of table "public.gate"
-pg_dump: dumping contents of table "public.jetbridge"
-pg_dump: dumping contents of table "public.landingtakingoff"
-pg_dump: dumping contents of table "public.runway"
-pg_dump: dumping contents of table "public.truckload"
-pg_dump: dumping contents of table "public.tugs"
-pg_restore: connecting to database for restore
+pg_dump: saving search_path =
+pg_dump: saving database d
+
 pg_restore: dropping FK CONSTRAINT tugs tugs_fk2
 pg_restore: dropping FK CONSTRAINT tugs tugs_fk1
 pg_restore: dropping FK CONSTRAINT truckload truckload_fk2
