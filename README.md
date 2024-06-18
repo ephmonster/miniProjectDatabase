@@ -81,9 +81,13 @@ The current ERD does not cover:
 
 We backed up our queries and restored the database using both COPY and INSERT and we logged the responses:
 1) INSERT
+pg_dump --file "backupSQL.sql" --host "localhost" --port "5432" --username "postgres" --format=c --large-objects --inserts --rows-per-insert "1000" --create --clean --if-exists --verbose "MiniProject"
+pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "MiniProject" --clean --if-exists --disable-triggers --verbose "backupSQL.sql
 #### [BackupSQL](backupSQL.sql)
 #### [BackupSQLlog](backupSQL.log)
 2) COPY
+pg_dump --file "backupPSQL.sql" --host "localhost" --port "5432" --username "postgres" --format=c --large-objects --verbose "MiniProject" 
+pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "MiniProject" --clean --if-exists --disable-triggers --verbose "backupPSQL.sql"
 #### [BackupPSQL](backupPSQL.sql)
 #### [BackupPSQLlog](backupPSQL.log)
 
