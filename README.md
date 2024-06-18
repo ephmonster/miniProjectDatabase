@@ -78,9 +78,11 @@ The current ERD does not cover:
 
 #### [Data Dump Command](DumpScript)
 
-We backed up our queries and restored the database using text-base dump as well as the dump command and we logged the responses:
+We backed up our queries and restored the database using both COPY and INSERT and we logged the responses:
+1) INSERT
 #### [BackupSQL](backupSQL.sql)
 #### [BackupSQLlog](backupSQL.log)
+2) COPY
 #### [BackupPSQL](backupPSQL.sql)
 #### [BackupPSQLlog](backupPSQL.log)
 
