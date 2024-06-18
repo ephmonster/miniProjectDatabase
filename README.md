@@ -4,7 +4,7 @@
 
 ## Project Proposal
 
-
+## Stage 1
 Our goal is to represent a database which stores data for the main equipment for an airport, such as airplanes, fueling equimpment, airplane tugs, jetbridge, etc.
 
 Our objective is streamline the management and maintainence of the airport equipment.
@@ -74,13 +74,16 @@ The current ERD does not cover:
 7) For each truckload that is generated with a refueling of the plane it is ensured that the truck is loaded with the proper type of fuel for that plane.
 8) Each airport has 100 gates and each gate has a jet bridge to connect it to the plane.
 
+## Stage 2
 ### Backups
 
 #### [Data Dump Command](DumpScript)
 
-We backed up our queries and restored the database using text-base dump as well as the dump command and we logged the responses:
+We backed up our queries and restored the database using both COPY and INSERT and we logged the responses:
+1) INSERT
 #### [BackupSQL](backupSQL.sql)
 #### [BackupSQLlog](backupSQL.log)
+2) COPY
 #### [BackupPSQL](backupPSQL.sql)
 #### [BackupPSQLlog](backupPSQL.log)
 
@@ -136,6 +139,7 @@ We backed up our queries and restored the database using text-base dump as well 
 
 
 #### Timing
+##### Nonparameterized Query Timing
 | Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
 |----------|----------|----------|----------|
 | 1 | 6.357 | 8.014 | |
@@ -146,6 +150,14 @@ We backed up our queries and restored the database using text-base dump as well 
 | 6 | 0.215 | 0.169 | |
 | 7 | 475.743 | 366.276 | |
 | 8 | 478.449 | 565.209 | |
+
+##### Parameterized Query Timing
+| Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
+|----------|----------|----------|----------|
+| 1 | 334.783 | 8.014 | |
+| 2 | 128.580 | 7.749 | |
+| 3 | 8651.190 | 2.511 | | 
+| 4 | 3.947 | 4.425 | idx_tug_makeandmodel |
 
 ### [Indexing](Indexes.sql)
 Added in indexing for the dates of the flights, makeand model for the airplanes and the manufacturer of the airplane tugs.
