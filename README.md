@@ -170,9 +170,9 @@ pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "Mini
 ##### Parameterized Query Timing
 | Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
 |----------|----------|----------|----------|
-| 1 | 334.783 | 10.426 | |
-| 2 | 128.580 | 4.395 | |
-| 3 | 8651.190 | 128.010 | | 
+| 1 | 334.783 | 10.426 | idx_landingtakingoff_date |
+| 2 | 128.580 | 4.395 | idx_truckload_date_typeoffuel |
+| 3 | 8651.190 | 128.010 | idx_landingtakingoff_number_location | 
 | 4 | 3.947 | 1.755 | idx_tug_makeandmodel |
 
 ### [Indexing](Indexes.sql)
