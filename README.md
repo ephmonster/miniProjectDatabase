@@ -164,8 +164,8 @@ pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "Mini
 | 4 | 4.097 | 4.425 | idx_tug_makeandmodel | 
 | 5 | 6.655 | 2.460 | idx_plane_makeandmodel |
 | 6 | 0.215 | 0.169 | |
-| 7 | 475.743 | 366.276 | |
-| 8 | 478.449 | 565.209 | |
+| 7 | 475.743 | 35.131  | idx_tugs_date |
+| 8 | 478.449 | 235.077 | idx_truckload_date |
 
 ##### Parameterized Query Timing
 | Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
@@ -187,6 +187,10 @@ Added in indexing for the dates of the flights, makeand model for the airplanes 
     * Index on the the truckloads by date and type of fuel
 5) CREATE INDEX idx_landingtakingoff_number_location ON landingtakingoff (number, location);
     * Index on the landing takeoff by location and runway number
+6) CREATE INDEX idx_tugs_date ON tugs (date);
+    * Index on the tuggings based off of the date.
+7) CREATE INDEX idx_truckload_date ON truckload (date);
+    * Index on the truckloads based off of the date.
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/6348251f-52e9-40f4-aa49-d71acfc2a5c1)
 
 #### Constraints
