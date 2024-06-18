@@ -81,9 +81,13 @@ The current ERD does not cover:
 
 We backed up our queries and restored the database using both COPY and INSERT and we logged the responses:
 1) INSERT
+pg_dump --file "backupSQL.sql" --host "localhost" --port "5432" --username "postgres" --format=c --large-objects --inserts --rows-per-insert "1000" --create --clean --if-exists --verbose "MiniProject"
+pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "MiniProject" --clean --if-exists --disable-triggers --verbose "backupSQL.sql
 #### [BackupSQL](backupSQL.sql)
 #### [BackupSQLlog](backupSQL.log)
 2) COPY
+pg_dump --file "backupPSQL.sql" --host "localhost" --port "5432" --username "postgres" --format=c --large-objects --verbose "MiniProject" 
+pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "MiniProject" --clean --if-exists --disable-triggers --verbose "backupPSQL.sql"
 #### [BackupPSQL](backupPSQL.sql)
 #### [BackupPSQLlog](backupPSQL.log)
 
@@ -94,30 +98,38 @@ We backed up our queries and restored the database using both COPY and INSERT an
    * Retrieve the make and model of each airplane.
    * Count how many airplanes exist for each make and model.
    * Group the results by the make and model.
+   * Need: Logistics coordiantor needs to know how many airplanes they have of each type.
 2) Query: SELECT * FROM airplane ORDER BY datemanufactored;
    * Select all columns from the airplane table.
    * Sort the results by the date the airplanes were manufactured, in ascending order.
+   * Need: Mechanic department can plan for maintance based off of how old a plane is.
 3) Query: SELECT serialnumber FROM public.airplane WHERE makeandmodel IN (SELECT makeandmodel FROM public.airplanetype WHERE makeandmodel LIKE 'Boeing%');
    * Select the serial number of airplanes.
    * Filter to include only those airplanes whose make and model match any make and model from the airplanetype table starting with 'Boeing'.
+   * Need: Safety inspector can view all Boeing planes after the Boeing recall.
 4) Query: SELECT a.serialnumber, a.makeandmodel FROM airplane a INNER JOIN airplanetype b ON a.makeandmodel = b.makeandmodel WHERE b.range > 13000;
    * Select the serial number and make and model of airplanes.
    * Perform an inner join between the airplane and airplanetype tables based on matching make and model.
    * Include only those airplanes where the range in the airplanetype table is greater than 13,000.
+   * Need: Flight planner planning long haul flights.
 ##### Update Queries
 5) Query: UPDATE airplanetype SET range = 10000 WHERE makeandmodel = 'Airbus A319';
    * Update the range value in the airplanetype table.
    * Set the range to 10,000 for all entries where the make and model is 'Airbus A319'.
+   * Need: Mechanic updating range of plane after parts upgrade.
 6) Query: UPDATE fueltype SET price = 5.0 WHERE typeoffuel = 'Avgas';
    * Update the price in the fueltype table.
    * Set the price to 5.0 for the fuel type 'Avgas'.
+   * Gasoline aquisition specialist can reset price to accuralty reflect the price 
 ##### Delete Queries
 7) Query: DELETE FROM tugs WHERE date < CURRENT_DATE - INTERVAL '5 months';
    * Delete entries from the tugs table.
    * Remove records where the date is older than 5 months from the current date.
+   * Database manager can clean up old data and remove it from storage.
 8) Query: DELETE FROM truckload WHERE date < CURRENT_DATE - INTERVAL '5 months';
    * Delete entries from the truckload table.
    * Remove records where the date is older than 5 months from the current date.
+   * Database manager can clean up old data and remove it from storage.
 #### [Parameterized Queries](ParamQueries.sql)
 #### [ParamQuery logs](param_query_log.log)
 1) Query: PREPARE get_airplanes_by_date_location (date, text) AS SELECT a.* FROM airplane a JOIN landingtakingoff l ON a.serialnumber = l.serialnumber WHERE l.date = $1 AND l.location = $2;
@@ -125,14 +137,18 @@ We backed up our queries and restored the database using both COPY and INSERT an
    * Select all columns from the airplane table.
    * Join the airplane table with the landingtakingoff table on the serial number.
    * Filter the results to include only those records where the date matches the provided date parameter and the location matches the provided text parameter.
+   * Need: Admin who needs to know all planes that took from a specific airport on a certain date.
 2) PREPARE get_fueling_trucks_by_fuelDate (date, text) AS SELECT t.* FROM truckload t WHERE t.date = $1 AND t.typeoffuel = $2;
    * Prepare a statement that accepts a data and a fueltype
    * It selects all truckloads of a certain fuel type on a certain date
-3) PREPARE get_runways_by_event_count (int) AS SELECT r.* FROM runway r WHERE (SELECT COUNT(*) FROM landingtakingoff l WHERE l.number = r.number AND l.location r.location) > $1
+   * Need: Truckloads coordinator needs to know all fuel loads taken on a specific date of a specific type of gas.
+3) PREPARE get_runways_by_event_count (int) AS SELECT r.* FROM runway r WHERE (SELECT COUNT(*) FROM landingtakingoff l WHERE l.number = r.number AND l.location = r.location) > $1
    * Prepare a statement named get_runways_by_event_count that accepts an integer as a parameter.
    * Gets all runways with more than the parameter given of landings/ takeoffs
+   * Need: Maintenance Manager can know when the runway needs to be redone based off the number of takeoff/landings done on the runway.
 4) PREPARE get_tugs_by_location_count_manufacturer (text) AS SELECT at.manufacturer, COUNT(*) FROM airplanetug at WHERE at.location = $1 GROUP BY at.manufacturer ORDER BY at.manufacturer;
    * Prepare a statement named get_tugs_by_location_count_manufacturer that accepts a text string as a parameter and retuns all the manufacturer's which have tugs at the given location, with the number of tugs per manufacturer, and is ordered
+   * Need: Tug Specialist who needs to know which tugs are at a specific airport.
 
 
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/477b32de-e184-4eaf-a519-15b977ac8799)
@@ -154,19 +170,23 @@ We backed up our queries and restored the database using both COPY and INSERT an
 ##### Parameterized Query Timing
 | Query Number | [RunTime No Indexing](query_log.log) | [Runtime with Indexing](query_log_indexes.log) | Relevant Index|
 |----------|----------|----------|----------|
-| 1 | 334.783 | 8.014 | |
-| 2 | 128.580 | 7.749 | |
-| 3 | 8651.190 | 2.511 | | 
-| 4 | 3.947 | 4.425 | idx_tug_makeandmodel |
+| 1 | 334.783 | 10.426 | |
+| 2 | 128.580 | 4.395 | |
+| 3 | 8651.190 | 128.010 | | 
+| 4 | 3.947 | 1.755 | idx_tug_makeandmodel |
 
 ### [Indexing](Indexes.sql)
 Added in indexing for the dates of the flights, makeand model for the airplanes and the manufacturer of the airplane tugs.
 1) CREATE INDEX idx_landingtakingoff_date ON public.landingtakingoff (date);
     * Index for the landingtakingoff table based on the date attribute
-3) CREATE INDEX idx_plane_makeandmodel ON public.airplane (makeandmodel);
+2) CREATE INDEX idx_plane_makeandmodel ON public.airplane (makeandmodel);
     * Index on the airplane table on the makeandmodel attribute
-5) CREATE INDEX idx_tug_makeandmodel ON  public.airplanetug (manufacturer);
+3) CREATE INDEX idx_tug_makeandmodel ON  public.airplanetug (manufacturer);
     * Index on the tug table on the manufacturer attribute
+4) CREATE INDEX idx_truckload_date_typeoffuel ON truckload (date, typeoffuel);
+    * Index on the the truckloads by date and type of fuel
+5) CREATE INDEX idx_landingtakingoff_number_location ON landingtakingoff (number, location);
+    * Index on the landing takeoff by location and runway number
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/6348251f-52e9-40f4-aa49-d71acfc2a5c1)
 
 #### Constraints
