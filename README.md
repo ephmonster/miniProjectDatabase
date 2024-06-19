@@ -121,6 +121,7 @@ pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "Mini
    * Gasoline aquisition specialist can reset price to accuralty reflect the price 
 ##### Delete Queries
 We did not use Cascading Deletes, we choose queries that specifically would not cause loss of data that represents physical entitites which are zoned in to only delete data from that table.
+
 7) Query: DELETE FROM tugs WHERE date < CURRENT_DATE - INTERVAL '5 months';
    * Delete entries from the tugs table.
    * Remove records where the date is older than 5 months from the current date.
