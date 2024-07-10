@@ -290,5 +290,5 @@ We selected complex queries that benefit from encapsulation within functions for
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/f46f7610-a660-4463-83fa-3b8436a363e3)
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/818e6fd0-c74d-4c43-98c8-42758a3d3322)
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/d744f33b-4c02-416a-9364-89c1df321322)
-As can be seen in the screenshots above the amount of JetA fuel in TLV went down by 60000 liters after the query was ran.
+As can be seen in the screenshots above the amount of JetA fuel in TLV went down by 120000 liters after the query was ran twice, once in the image and once just before.
 
