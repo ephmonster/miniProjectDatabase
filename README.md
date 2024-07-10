@@ -212,4 +212,26 @@ Here is the sql for the violating queries:
 Here is the log for the errors for the above queries:
 #### [ErrorLogs](constraint_violation_log.log)
 
+## Stage 3
+
+### Additional Queries
+1)  Select all trucks at location X which had a refuel on day Y
+     * SELECT a.licenseplate
+       FROM fuelingtruck a JOIN truckload b
+       ON a.licenseplate = b.licenseplate
+       WHERE a.location = 'LAX' AND b.date = '2024-04-08
+
+2)  Select all airplanes that are in service and use a given type of fuel
+     * SELECT a.serialnumber
+       FROM airplane a JOIN airplanetype b
+       ON a.makeandmodel = b.makeandmodel
+       WHERE a.in_service = 1 AND b.typeoffuel = 'Avgas'
+
+3)  Select all airplanes which had more than 10 takeoffs
+     * SELECT a.serialnumber
+       FROM airplane a JOIN landingtakingoff b
+       ON a.serialnumber = b.serialnumber
+       GROUP BY a.serialnumber
+       HAVING COUNT(*)>10
+ 
 
