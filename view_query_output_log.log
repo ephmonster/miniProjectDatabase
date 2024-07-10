@@ -1,0 +1,61 @@
+View 1:
+"Seq Scan on jetbridge a  (cost=0.00..30.00 rows=1 width=20) (actual time=0.036..0.385 rows=1 loops=1)"
+"  Filter: (((location)::text = 'LAX'::text) AND (gatenumber = 1))"
+"  Rows Removed by Filter: 1399"
+"Planning Time: 0.135 ms"
+"Execution Time: 0.803 ms"
+
+Insert Query:
+"Insert on jetbridge a  (cost=0.00..0.01 rows=0 width=0) (actual time=0.614..0.615 rows=0 loops=1)"
+"  ->  Result  (cost=0.00..0.01 rows=1 width=48) (actual time=0.002..0.003 rows=1 loops=1)"
+"Planning Time: 0.052 ms"
+"Trigger for constraint jetbridge_gatenumber_location_fkey: time=1.438 calls=1"
+"Execution Time: 2.099 ms"
+
+View 2:
+"Seq Scan on airplane a  (cost=0.00..290.25 rows=638 width=28) (actual time=0.037..3.022 rows=638 loops=1)"
+"  Filter: (((makeandmodel)::text = 'Airbus A319'::text) AND (in_service = 1))"
+"  Rows Removed by Filter: 12245"
+"Planning Time: 0.240 ms"
+"Execution Time: 3.095 ms"
+
+Update Query:
+"Update on airplane a  (cost=0.00..290.25 rows=0 width=0) (actual time=12.371..12.372 rows=0 loops=1)"
+"  ->  Seq Scan on airplane a  (cost=0.00..290.25 rows=1 width=10) (actual time=0.033..3.819 rows=1 loops=1)"
+"        Filter: ((datemanufactored = '2006-10-24'::date) AND ((makeandmodel)::text = 'Airbus A319'::text))"
+"        Rows Removed by Filter: 12882"
+"Planning Time: 2.653 ms"
+"Execution Time: 20.385 ms"
+
+View 3:
+"Bitmap Heap Scan on truckload a  (cost=8.65..921.16 rows=413 width=25) (actual time=0.129..0.529 rows=426 loops=1)"
+"  Recheck Cond: ((date = '2024-04-28'::date) AND ((typeoffuel)::text = 'JetB'::text))"
+"  Heap Blocks: exact=380"
+"  ->  Bitmap Index Scan on idx_truckload_date_typeoffuel  (cost=0.00..8.55 rows=413 width=0) (actual time=0.084..0.084 rows=426 loops=1)"
+"        Index Cond: ((date = '2024-04-28'::date) AND ((typeoffuel)::text = 'JetB'::text))"
+"Planning Time: 0.151 ms"
+"Execution Time: 1.602 ms"
+
+Delete Query:
+"Delete on truckload a  (cost=0.42..8.44 rows=0 width=0) (actual time=1.402..1.402 rows=0 loops=1)"
+"  ->  Index Scan using truckload_pkey on truckload a  (cost=0.42..8.44 rows=1 width=6) (actual time=0.323..0.325 rows=1 loops=1)"
+"        Index Cond: (""truckloadID"" = 400)"
+"        Filter: (date = '2024-04-28'::date)"
+"Planning Time: 1.410 ms"
+"Execution Time: 2.937 ms"
+
+View 4:
+"Seq Scan on runway a  (cost=0.00..1.70 rows=4 width=20) (actual time=0.044..0.060 rows=4 loops=1)"
+"  Filter: ((location)::text = 'LAX'::text)"
+"  Rows Removed by Filter: 52"
+"Planning Time: 0.234 ms"
+"Execution Time: 0.092 ms"
+
+Update Query:
+"Update on runway a  (cost=0.00..1.84 rows=0 width=0) (actual time=3.845..3.846 rows=0 loops=1)"
+"  ->  Seq Scan on runway a  (cost=0.00..1.84 rows=1 width=10) (actual time=0.017..0.027 rows=1 loops=1)"
+"        Filter: ((number = 0) AND ((location)::text = 'LAX'::text))"
+"        Rows Removed by Filter: 55"
+"Planning Time: 0.846 ms"
+"Execution Time: 6.347 ms"
+
