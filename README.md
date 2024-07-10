@@ -215,6 +215,7 @@ Here is the log for the errors for the above queries:
 ## Stage 3
 
 ### Additional Queries
+#### Queries
 1)  Select all trucks at location X which had a refuel on day Y
      * SELECT a.licenseplate
        FROM fuelingtruck a JOIN truckload b
@@ -233,5 +234,38 @@ Here is the log for the errors for the above queries:
        ON a.serialnumber = b.serialnumber
        GROUP BY a.serialnumber
        HAVING COUNT(*)>10
- 
+
+#### Timing
+Note: The log output was appended to the [Query Log File] (query_log.log).
+| Query Number | [RunTime](query_log.log) | 
+|----------|----------|
+| 1 | 334.783 |
+| 2 | 128.580 |
+| 3 | 8651.190 |
+| 4 | 3.947 |
+
+### [Views](views.sahdfhfdkjsf - - finish)
+#### Process of choosing views:
+We selected views that would provide essential information for specific roles within the airport management team. These views help streamline operations and provide quick access to frequently needed data.
+
+1) View all jetbridges at LAX International Airport
+    * User: jetbridge manager at LAX (similar view can be used for a manager at another airport)
+    * Need: To manage all jetbridges in the airport
+2) View all airbus A319 airplanes
+    * User: Engineer specializing in these planes
+    * Need: Maintance of these planes
+3) View truckloads from a specific day
+    * User: Petrolium Manager
+    * Need: Track which trucks filled up with a specific type of gas on that day, helps for billing the airlines for gas
+4) View runways at LAX
+    * User: Air Traffic Control Agent
+    * Need: Plan plane landing and takeoffs
+
+### [Functions](add link)
+#### Process of choosing queries to replace with functions:
+We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
+1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
+2) Function for airplanes by date and location (Query 1 in stage 2 parameterized queries)
+3) Function for truckloads by fuel type and date (Query 2 in stage 2 parameterized queries)
+4) (Query 2 in stage 2 parameterized queries)
 
