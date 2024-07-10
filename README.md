@@ -215,7 +215,7 @@ Here is the log for the errors for the above queries:
 ## Stage 3
 
 ### Additional Queries
-#### Queries
+#### [Queries](Queries.sql)
 1)  Select all trucks at location X which had a refuel on day Y
      * SELECT a.licenseplate
        FROM fuelingtruck a JOIN truckload b
@@ -244,7 +244,7 @@ Note: The log output was appended to the [Query Log File] (query_log.log).
 | 3 | 8651.190 |
 | 4 | 3.947 |
 
-### [Views](views.sahdfhfdkjsf - - finish)
+### [Views](views_queries.sql)
 #### Process of choosing views:
 We selected views that would provide essential information for specific roles within the airport management team. These views help streamline operations and provide quick access to frequently needed data.
 
@@ -267,5 +267,8 @@ We selected complex queries that benefit from encapsulation within functions for
 1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
 2) Function for airplanes by date and location (Query 1 in stage 2 parameterized queries)
 3) Function for truckloads by fuel type and date (Query 2 in stage 2 parameterized queries)
-4) (Query 2 in stage 2 parameterized queries)
+4) Function to get all runways with more than a given amount of takeoff/landings (Query 2 in stage 2 parameterized queries)
+
+### Triggers
+
 
