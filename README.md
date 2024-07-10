@@ -260,16 +260,7 @@ We selected views that would provide essential information for specific roles wi
 4) View runways at LAX
     * User: Air Traffic Control Agent
     * Need: Plan plane landing and takeoffs
-
-### [Functions](add link)
-#### Process of choosing queries to replace with functions:
-We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
-1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
-2) Function for airplanes by date and location (Query 1 in stage 2 parameterized queries)
-3) Function for truckloads by fuel type and date (Query 2 in stage 2 parameterized queries)
-4) Function to get all runways with more than a given amount of takeoff/landings (Query 2 in stage 2 parameterized queries)
-
-####vExplanation of Procedure and Error Messages
+#### Explanation of Procedure and Error Messages
 ##### View Creation and Queries:
 
 Each view is created using CREATE OR REPLACE VIEW with WITH CHECK OPTION to ensure that any inserted or updated data must satisfy the view's WHERE clause.
@@ -285,6 +276,19 @@ The EXPLAIN ANALYZE statement is used to log the execution plan and performance 
 Any error messages encountered during the execution of the queries will be captured in the log output. For instance, inserting an invalid record into a view with WITH CHECK OPTION will generate an error message indicating the violation of the view's condition.
 This script provides a comprehensive approach to creating views, performing queries, and executing DML operations while logging the execution details for analysis and debugging.
 
-### Triggers
+### [Functions](add link)
+#### Process of choosing queries to replace with functions:
+We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
+1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
+2) Function for airplanes by date and location (Query 1 in stage 2 parameterized queries)
+3) Function for truckloads by fuel type and date (Query 2 in stage 2 parameterized queries)
+4) Function to get all runways with more than a given amount of takeoff/landings (Query 2 in stage 2 parameterized queries)
 
+### [Triggers](triggers.sql)
+1) Output an error message if a user tries to add an airplane with the manufactor date after the date aquired
+2) For each truck load of a given type of fuel at an airport subtract that from the total amount of fuel in the fuel stock of that type in the airport
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/f46f7610-a660-4463-83fa-3b8436a363e3)
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/818e6fd0-c74d-4c43-98c8-42758a3d3322)
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/d744f33b-4c02-416a-9364-89c1df321322)
+As can be seen in the screenshots above the amount of JetA fuel in TLV went down by 60000 liters after the query was ran.
 
