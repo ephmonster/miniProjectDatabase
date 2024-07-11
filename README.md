@@ -275,7 +275,7 @@ The EXPLAIN ANALYZE statement is used to log the execution plan and performance 
 Any error messages encountered during the execution of the queries will be captured in the log output. For instance, inserting an invalid record into a view with WITH CHECK OPTION will generate an error message indicating the violation of the view's condition.
 This script provides a comprehensive approach to creating views, performing queries, and executing DML operations while logging the execution details for analysis and debugging.
 
-### [Functions](add link)
+### [Functions](functions.sql)
 #### Process of choosing queries to replace with functions:
 We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
 1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
@@ -287,7 +287,7 @@ We selected complex queries that benefit from encapsulation within functions for
 4) Function to get all runways with more than a given amount of takeoff/landings (Query 2 in stage 2 parameterized queries)
     * Test Query: select * from runway_events(30)
 #### Timing
-| Query Number | [RunTime](query_log.log) | 
+| Query Number | [RunTime](function_log.log) | 
 |----------|----------|
 | 1 | 51.821 |
 | 2 | 4.996 |
