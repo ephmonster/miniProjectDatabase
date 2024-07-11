@@ -1,1 +1,4 @@
 *.sql filter=lfs diff=lfs merge=lfs -text
+triggers.sql filter=lfs diff=lfs merge=lfs -text
+view_queries.sal filter=lfs diff=lfs merge=lfs -text
+view_queries.sql filter=lfs diff=lfs merge=lfs -text
