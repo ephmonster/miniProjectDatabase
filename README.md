@@ -79,13 +79,11 @@ The current ERD does not cover:
 
 #### [Data Dump Command](DumpScript)
 
-We backed up our queries and restored the database using both COPY and INSERT and we logged the responses:
-1) INSERT
+We backed up our queries and restored the database using INSERT statements and default pg_dump
 pg_dump --file "backupSQL.sql" --host "localhost" --port "5432" --username "postgres" --format=c --large-objects --inserts --rows-per-insert "1000" --create --clean --if-exists --verbose "MiniProject"
 pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "MiniProject" --clean --if-exists --disable-triggers --verbose "backupSQL.sql
 #### [BackupSQL](backupSQL.sql)
 #### [BackupSQLlog](backupSQL.log)
-2) COPY
 pg_dump --file "backupPSQL.sql" --host "localhost" --port "5432" --username "postgres" --format=c --large-objects --verbose "MiniProject" 
 pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "MiniProject" --clean --if-exists --disable-triggers --verbose "backupPSQL.sql"
 #### [BackupPSQL](backupPSQL.sql)
@@ -122,6 +120,8 @@ pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "Mini
    * Set the price to 5.0 for the fuel type 'Avgas'.
    * Gasoline aquisition specialist can reset price to accuralty reflect the price 
 ##### Delete Queries
+We did not use Cascading Deletes, we choose queries that specifically would not cause loss of data that represents physical entitites which are zoned in to only delete data from that table.
+
 7) Query: DELETE FROM tugs WHERE date < CURRENT_DATE - INTERVAL '5 months';
    * Delete entries from the tugs table.
    * Remove records where the date is older than 5 months from the current date.
@@ -212,4 +212,83 @@ Here is the sql for the violating queries:
 Here is the log for the errors for the above queries:
 #### [ErrorLogs](constraint_violation_log.log)
 
+## Stage 3
+
+### Additional Queries
+#### [Queries](Queries.sql)
+1)  Select all trucks at location X which had a refuel on day Y
+     * SELECT a.licenseplate
+       FROM fuelingtruck a JOIN truckload b
+       ON a.licenseplate = b.licenseplate
+       WHERE a.location = 'LAX' AND b.date = '2024-04-08
+
+2)  Select all airplanes that are in service and use a given type of fuel
+     * SELECT a.serialnumber
+       FROM airplane a JOIN airplanetype b
+       ON a.makeandmodel = b.makeandmodel
+       WHERE a.in_service = 1 AND b.typeoffuel = 'Avgas'
+
+3)  Select all airplanes which had more than 10 takeoffs
+     * SELECT a.serialnumber
+       FROM airplane a JOIN landingtakingoff b
+       ON a.serialnumber = b.serialnumber
+       GROUP BY a.serialnumber
+       HAVING COUNT(*)>10
+
+#### Timing
+Note: The log output was appended to the [Query Log File] (query_log.log).
+| Query Number | [RunTime](query_log.log) | 
+|----------|----------|
+| 1 | 334.783 |
+| 2 | 128.580 |
+| 3 | 8651.190 |
+| 4 | 3.947 |
+
+### [Views](views_queries.sql)
+#### Process of choosing views:
+We selected views that would provide essential information for specific roles within the airport management team. These views help streamline operations and provide quick access to frequently needed data.
+
+1) View all jetbridges at LAX International Airport
+    * User: jetbridge manager at LAX (similar view can be used for a manager at another airport)
+    * Need: To manage all jetbridges in the airport
+2) View all airbus A319 airplanes
+    * User: Engineer specializing in these planes
+    * Need: Maintance of these planes
+3) View truckloads from a specific day
+    * User: Petrolium Manager
+    * Need: Track which trucks filled up with a specific type of gas on that day, helps for billing the airlines for gas
+4) View runways at LAX
+    * User: Air Traffic Control Agent
+    * Need: Plan plane landing and takeoffs
+#### Explanation of Procedure and Error Messages
+##### View Creation and Queries:
+
+Each view is created using CREATE OR REPLACE VIEW with WITH CHECK OPTION to ensure that any inserted or updated data must satisfy the view's WHERE clause.
+For each view, a corresponding SELECT query is provided to fetch specific data from the view.
+DML Operations:
+
+INSERT (View 1): Inserting a new record into lax_bridges. If the inserted record does not satisfy the location = 'LAX' condition, an error will occur due to the WITH CHECK OPTION.
+UPDATE (View 2): Updating the in_service status of a specific Airbus A319. If the record to be updated does not exist, no rows will be affected, which can be observed in the execution plan.
+DELETE (View 3): Deleting a specific truckload record. If the record does not exist, no rows will be affected, and the execution plan will show zero rows deleted.
+Logging:
+
+The EXPLAIN ANALYZE statement is used to log the execution plan and performance metrics for each query and DML operation. This includes the cost, actual time, and number of rows affected.
+Any error messages encountered during the execution of the queries will be captured in the log output. For instance, inserting an invalid record into a view with WITH CHECK OPTION will generate an error message indicating the violation of the view's condition.
+This script provides a comprehensive approach to creating views, performing queries, and executing DML operations while logging the execution details for analysis and debugging.
+
+### [Functions](add link)
+#### Process of choosing queries to replace with functions:
+We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
+1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
+2) Function for airplanes by date and location (Query 1 in stage 2 parameterized queries)
+3) Function for truckloads by fuel type and date (Query 2 in stage 2 parameterized queries)
+4) Function to get all runways with more than a given amount of takeoff/landings (Query 2 in stage 2 parameterized queries)
+
+### [Triggers](triggers.sql)
+1) Output an error message if a user tries to add an airplane with the manufactor date after the date aquired
+2) For each truck load of a given type of fuel at an airport subtract that from the total amount of fuel in the fuel stock of that type in the airport
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/f46f7610-a660-4463-83fa-3b8436a363e3)
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/818e6fd0-c74d-4c43-98c8-42758a3d3322)
+![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/d744f33b-4c02-416a-9364-89c1df321322)
+As can be seen in the screenshots above the amount of JetA fuel in TLV went down by 120000 liters after the query was ran twice, once in the image and once just before.
 
