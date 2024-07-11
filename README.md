@@ -293,7 +293,7 @@ Link to the log file for the view and queries can be found [here](view_query_out
 ![image](https://github.com/user-attachments/assets/bfa4c728-2e66-46c6-b40d-aee1803bbc34)
 
 
-### [Functions](functions.sql)
+### [Functions](Functions.sql)
 #### Process of choosing queries to replace with functions:
 We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
 1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
