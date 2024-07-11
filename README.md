@@ -282,7 +282,8 @@ Link to the log file for the view and queries can be found [here](view_query_out
     *  Query: SELECT a.*
        FROM lax_runways a
 
-  ![lax_runway_length_bargraph](https://github.com/user-attachments/assets/401df658-02d1-412c-9021-d091398e07d4)
+ ![image](https://github.com/user-attachments/assets/0f95f457-446b-4f0c-a1d5-dd243e742878)
+
 
 2) Viewing all fueltruck loads from a specific date: Used to understand breakdown of fuel needs and number of fuel loads needed per day
     * Query: SELECT typeoffuel, COUNT(*) AS truckload_count
