@@ -275,6 +275,21 @@ The EXPLAIN ANALYZE statement is used to log the execution plan and performance 
 Any error messages encountered during the execution of the queries will be captured in the log output. For instance, inserting an invalid record into a view with WITH CHECK OPTION will generate an error message indicating the violation of the view's condition.
 This script provides a comprehensive approach to creating views, performing queries, and executing DML operations while logging the execution details for analysis and debugging.
 
+### Visualizations:
+1) LAX runway Length visualization: Used to plan flight takeoff/landings based on required runway length for a plane
+    *  Query: SELECT a.*
+       FROM lax_runways a
+
+  ![lax_runway_length_bargraph](https://github.com/user-attachments/assets/401df658-02d1-412c-9021-d091398e07d4)
+
+2) Viewing all fueltruck loads from a specific date: Used to understand breakdown of fuel needs and number of fuel loads needed per day
+    * Query: SELECT typeoffuel, COUNT(*) AS truckload_count
+      FROM truckload_2024_04_28
+      GROUP BY typeoffuel;
+![fuel_loads_per_day](https://github.com/user-attachments/assets/7fdde0e4-b663-4540-bf44-2c017d86749f)
+![image](https://github.com/user-attachments/assets/bfa4c728-2e66-46c6-b40d-aee1803bbc34)
+
+
 ### [Functions](functions.sql)
 #### Process of choosing queries to replace with functions:
 We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
