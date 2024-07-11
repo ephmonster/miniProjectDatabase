@@ -236,7 +236,7 @@ Here is the log for the errors for the above queries:
        HAVING COUNT(*)>10
 
 #### Timing
-Note: The log output was appended to the [Query_Log_File] (query_log.log).
+Note: The log output was appended to the [Query_Log_File](query_log.log).
 | Query Number | [RunTime](query_log.log) | 
 |----------|----------|
 | 1 | 4.793 |
