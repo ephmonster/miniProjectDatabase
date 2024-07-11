@@ -12,6 +12,13 @@ Insert Query:
 "Trigger for constraint jetbridge_gatenumber_location_fkey: time=1.438 calls=1"
 "Execution Time: 2.099 ms"
 
+Select Query:
+"Seq Scan on jetbridge a  (cost=0.00..30.00 rows=1 width=20) (actual time=0.036..0.385 rows=1 loops=1)"
+"  Filter: (((location)::text = 'LAX'::text) AND (gatenumber = 1))"
+"  Rows Removed by Filter: 1399"
+"Planning Time: 0.135 ms"
+"Execution Time: 0.803 ms"
+
 View 2:
 "Seq Scan on airplane a  (cost=0.00..290.25 rows=638 width=28) (actual time=0.037..3.022 rows=638 loops=1)"
 "  Filter: (((makeandmodel)::text = 'Airbus A319'::text) AND (in_service = 1))"
@@ -26,6 +33,14 @@ Update Query:
 "        Rows Removed by Filter: 12882"
 "Planning Time: 2.653 ms"
 "Execution Time: 20.385 ms"
+
+Select Query:
+"Seq Scan on airplane a  (cost=0.00..290.25 rows=638 width=28) (actual time=0.037..3.022 rows=638 loops=1)"
+"  Filter: (((makeandmodel)::text = 'Airbus A319'::text) AND (in_service = 1))"
+"  Rows Removed by Filter: 12245"
+"Planning Time: 0.240 ms"
+"Execution Time: 3.095 ms"
+
 
 View 3:
 "Bitmap Heap Scan on truckload a  (cost=8.65..921.16 rows=413 width=25) (actual time=0.129..0.529 rows=426 loops=1)"
@@ -44,6 +59,28 @@ Delete Query:
 "Planning Time: 1.410 ms"
 "Execution Time: 2.937 ms"
 
+Select Query 1:
+"Bitmap Heap Scan on truckload a  (cost=8.65..921.16 rows=413 width=25) (actual time=0.129..0.529 rows=426 loops=1)"
+"  Recheck Cond: ((date = '2024-04-28'::date) AND ((typeoffuel)::text = 'JetB'::text))"
+"  Heap Blocks: exact=380"
+"  ->  Bitmap Index Scan on idx_truckload_date_typeoffuel  (cost=0.00..8.55 rows=413 width=0) (actual time=0.084..0.084 rows=426 loops=1)"
+"        Index Cond: ((date = '2024-04-28'::date) AND ((typeoffuel)::text = 'JetB'::text))"
+"Planning Time: 0.151 ms"
+"Execution Time: 1.602 ms"
+
+
+Select Query 2:
+"HashAggregate  (cost=1554.54..1554.57 rows=3 width=13) (actual time=3.362..3.363 rows=3 loops=1)"
+"  Group Key: a.typeoffuel"
+"  Batches: 1  Memory Usage: 24kB"
+"  ->  Bitmap Heap Scan on truckload a  (cost=19.17..1547.53 rows=1403 width=5) (actual time=0.373..2.503 rows=1443 loops=1)"
+"        Recheck Cond: (date = '2024-04-28'::date)"
+"        Heap Blocks: exact=925"
+"        ->  Bitmap Index Scan on idx_truckload_date  (cost=0.00..18.82 rows=1403 width=0) (actual time=0.257..0.257 rows=1443 loops=1)"
+"              Index Cond: (date = '2024-04-28'::date)"
+"Planning Time: 0.214 ms"
+"Execution Time: 3.427 ms"
+
 View 4:
 "Seq Scan on runway a  (cost=0.00..1.70 rows=4 width=20) (actual time=0.044..0.060 rows=4 loops=1)"
 "  Filter: ((location)::text = 'LAX'::text)"
@@ -58,4 +95,11 @@ Update Query:
 "        Rows Removed by Filter: 55"
 "Planning Time: 0.846 ms"
 "Execution Time: 6.347 ms"
+
+Select Query:
+"Seq Scan on runway a  (cost=0.00..1.70 rows=4 width=20) (actual time=0.044..0.060 rows=4 loops=1)"
+"  Filter: ((location)::text = 'LAX'::text)"
+"  Rows Removed by Filter: 52"
+"Planning Time: 0.234 ms"
+"Execution Time: 0.092 ms"
 
