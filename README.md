@@ -239,10 +239,9 @@ Here is the log for the errors for the above queries:
 Note: The log output was appended to the [Query Log File] (query_log.log).
 | Query Number | [RunTime](query_log.log) | 
 |----------|----------|
-| 1 | 334.783 |
-| 2 | 128.580 |
-| 3 | 8651.190 |
-| 4 | 3.947 |
+| 1 | 4.793 |
+| 2 | 9.891 |
+| 3 | 760.600 |
 
 ### [Views](views_queries.sql)
 #### Process of choosing views:
@@ -280,10 +279,20 @@ This script provides a comprehensive approach to creating views, performing quer
 #### Process of choosing queries to replace with functions:
 We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
 1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
+    * Test Query: SELECT * FROM airplanes13000()
 2) Function for airplanes by date and location (Query 1 in stage 2 parameterized queries)
+    * Test Query: select * from airplanes_date_location('2024-05-19', 'TLV')
 3) Function for truckloads by fuel type and date (Query 2 in stage 2 parameterized queries)
+    * Test Query: SELECT * FROM trucks_fuel_date('2024-04-28', 'JetB')
 4) Function to get all runways with more than a given amount of takeoff/landings (Query 2 in stage 2 parameterized queries)
-
+    * Test Query: select * from runway_events(30)
+#### Timing
+| Query Number | [RunTime](query_log.log) | 
+|----------|----------|
+| 1 | 51.821 |
+| 2 | 4.996 |
+| 3 | 1.948 |
+| 4 | 63.743 |
 ### [Triggers](triggers.sql)
 1) Output an error message if a user tries to add an airplane with the manufactor date after the date aquired
 2) For each truck load of a given type of fuel at an airport subtract that from the total amount of fuel in the fuel stock of that type in the airport
