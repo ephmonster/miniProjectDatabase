@@ -236,7 +236,7 @@ Here is the log for the errors for the above queries:
        HAVING COUNT(*)>10
 
 #### Timing
-Note: The log output was appended to the [Query Log File] (query_log.log).
+Note: The log output was appended to the [Query_Log_File](query_log.log).
 | Query Number | [RunTime](query_log.log) | 
 |----------|----------|
 | 1 | 4.793 |
@@ -263,19 +263,37 @@ We selected views that would provide essential information for specific roles wi
 ##### View Creation and Queries:
 
 Each view is created using CREATE OR REPLACE VIEW with WITH CHECK OPTION to ensure that any inserted or updated data must satisfy the view's WHERE clause.
-For each view, a corresponding SELECT query is provided to fetch specific data from the view.
+For each view, a corresponding [SELECT](view_queries.sql) query is provided to fetch specific data from the view.
+
 DML Operations:
 
-INSERT (View 1): Inserting a new record into lax_bridges. If the inserted record does not satisfy the location = 'LAX' condition, an error will occur due to the WITH CHECK OPTION.
+[INSERT](view_queries.sql) (View 1): Inserting a new record into lax_bridges. If the inserted record does not satisfy the location = 'LAX' condition, an error will occur due to the WITH CHECK OPTION.
 UPDATE (View 2): Updating the in_service status of a specific Airbus A319. If the record to be updated does not exist, no rows will be affected, which can be observed in the execution plan.
-DELETE (View 3): Deleting a specific truckload record. If the record does not exist, no rows will be affected, and the execution plan will show zero rows deleted.
+[DELETE](view_queries.sql) (View 3): Deleting a specific truckload record. If the record does not exist, no rows will be affected, and the execution plan will show zero rows deleted.
 Logging:
 
 The EXPLAIN ANALYZE statement is used to log the execution plan and performance metrics for each query and DML operation. This includes the cost, actual time, and number of rows affected.
 Any error messages encountered during the execution of the queries will be captured in the log output. For instance, inserting an invalid record into a view with WITH CHECK OPTION will generate an error message indicating the violation of the view's condition.
 This script provides a comprehensive approach to creating views, performing queries, and executing DML operations while logging the execution details for analysis and debugging.
 
-### [Functions](functions.sql)
+Link to the log file for the view and queries can be found [here](view_query_output_log.log)
+### Visualizations:
+1) LAX runway Length visualization: Used to plan flight takeoff/landings based on required runway length for a plane
+    *  Query: SELECT a.*
+       FROM lax_runways a
+
+ ![image](https://github.com/user-attachments/assets/0f95f457-446b-4f0c-a1d5-dd243e742878)
+
+
+2) Viewing all fueltruck loads from a specific date: Used to understand breakdown of fuel needs and number of fuel loads needed per day
+    * Query: SELECT typeoffuel, COUNT(*) AS truckload_count
+      FROM truckload_2024_04_28
+      GROUP BY typeoffuel;
+![fuel_loads_per_day](https://github.com/user-attachments/assets/7fdde0e4-b663-4540-bf44-2c017d86749f)
+![image](https://github.com/user-attachments/assets/bfa4c728-2e66-46c6-b40d-aee1803bbc34)
+
+
+### [Functions](Functions.sql)
 #### Process of choosing queries to replace with functions:
 We selected complex queries that benefit from encapsulation within functions for better modularity and reusability. These functions can take parameters and return results, making them flexible for various operational needs.
 1) Function for airplanes with a range greater than 13000 (Query 4 in stage 2 nonparameterized queries)
