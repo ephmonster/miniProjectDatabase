@@ -319,3 +319,72 @@ We selected complex queries that benefit from encapsulation within functions for
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/d744f33b-4c02-416a-9364-89c1df321322)
 As can be seen in the screenshots above the amount of JetA fuel in TLV went down by 120000 liters after the query was ran twice, once in the image and once just before.
 
+
+## Stage 4
+
+### Integration
+
+1) First we outlined the DSD and ERD to create a blueprint of how we would merge the 2 databases together
+2) We created a new database from the datadump backup from our friends database.
+3) We created a Forgein Data Wrapper linked to the other database.
+4) We created a mapping to the forgein database
+5) Then imported the forgein schema
+To view the commands click [here](integration_forgein_data_wrapper_creation.sql)
+
+### Integrated Views
+#### View 1
+
+#### View 2
+This view combines the airline equipment database with the ticketing database. 
+Goal: Leverage client feedback on their flight experience to improve flight quality specifically relating to the airplanes.
+We create joins to combine user ratings to the flight they took and which planes were used to better understand client experience for a given flight, as well as gain insite into trends of client ratings based on the plane model they flew (to see whether clients enjoyed flying on newer models better by a significant amount).
+##### Users
+Data Analysts: To analyze trends in customer satisfaction and operational performance.
+Customer Service Teams: To quickly access customer feedback and address issues.
+Management: To make informed decisions based on comprehensive data.
+##### Queries
+**Query 1:**
+
+**Summary:**
+Calculates the average rating for each airplane make and model, ordered by highest rating.
+
+**Use Case:**
+Determine the most highly rated airplane models based on customer reviews.
+
+**User:**
+Airline data analysts.
+
+**Query 2:**
+
+**Summary:**
+Prepares and executes an update to change the rating of a specific ticket.
+
+**Use Case:**
+Modify a customer's review rating for a specific flight ticket.
+
+**User:**
+Database administrators.
+
+**Query 3:**
+
+**Summary:**
+Calculates the average rating and the number of reviews for each flight, ordered by highest average rating.
+
+**Use Case:**
+Identify flights with the best customer satisfaction and the volume of reviews they received.
+
+**User:**
+Airline management and data analysts.
+
+**Query 4:**
+
+**Summary:**
+Deletes reviews for flights that have only one review to ensure data quality.
+
+**Use Case:**
+Clean the review database by removing single-review flights to improve the reliability of aggregated data.
+
+**User:**
+Database administrators and data quality managers.
+
+
