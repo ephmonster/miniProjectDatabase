@@ -342,6 +342,7 @@ We create joins to combine user ratings to the flight they took and which planes
 Data Analysts: To analyze trends in customer satisfaction and operational performance.
 Customer Service Teams: To quickly access customer feedback and address issues.
 Management: To make informed decisions based on comprehensive data.
+
 ##### Queries
 **Query 1:**
 
@@ -386,5 +387,13 @@ Clean the review database by removing single-review flights to improve the relia
 
 **User:**
 Database administrators and data quality managers.
+##### Timing
+| Query Number | [RunTime](Intergated_Views_Queries_Log.log) | 
+|----------|----------|
+| 1 | 3892.775 |
+| 2 | 7.189 |
+| 3 | 2925.043 |
+| 4 | 6041.815|
 
+##### Errors
 
