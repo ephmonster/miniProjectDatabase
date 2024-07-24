@@ -403,7 +403,7 @@ JOIN ItsGate g ON g.flightid = f.flightid
 JOIN landingtakingoff l ON l.flightid = f.flightid
 WHERE l.lt = 0 AND g.location = l.location
 ```
-##### [Queries](Integrate_View_queries.sql)
+##### [Queries](Integrate_View_Queries.sql)
 
 ### Query 1
 
@@ -458,10 +458,10 @@ Ticketing and check-in staff adding new boarding pass information into the syste
 ##### Timing
 | Query Number | [RunTime](Intergated_Views_Queries_Log.log) | 
 |----------|----------|
-| 1 | 3892.775 |
-| 2 | 7.189 |
-| 3 | 2925.043 |
-| 4 | 6041.815|
+| 1 | 42.352 |
+| 2 | 4.974 |
+| 3 | 0.547 |
+| 4 |  5.153 |
 #### View 2
 This view combines the airline equipment database with the ticketing database. 
 Goal: Leverage client feedback on their flight experience to improve flight quality specifically relating to the airplanes.
@@ -488,7 +488,7 @@ JOIN
     public.review r ON r.ticketid = t.ticketid;
 ```
 
-##### [Queries](Integrate_View_queries.sql)
+##### [Queries](Integrate_View_Queries.sql)
 **Query 1:**
 
 **Summary:**
