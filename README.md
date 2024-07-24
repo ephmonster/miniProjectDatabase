@@ -323,13 +323,26 @@ As can be seen in the screenshots above the amount of JetA fuel in TLV went down
 ## Stage 4
 
 ### Integration
-
 1) First we outlined the DSD and ERD to create a blueprint of how we would merge the 2 databases together
+#### Integrated ERD
+![Integrated_ERD](https://github.com/user-attachments/assets/fe28ac48-7373-462f-b197-69d81f0ee653)
+#### Integrated DSD
+![Integrated_DSD](https://github.com/user-attachments/assets/370649ea-5b12-41d7-9b31-897e840d1368)
 2) We created a new database from the datadump backup from our friends database.
 3) We created a Forgein Data Wrapper linked to the other database.
 4) We created a mapping to the forgein database
 5) Then imported the forgein schema
 To view the commands click [here](integration_forgein_data_wrapper_creation.sql)
+6) Then we implemented the necessary changes to blend the 2 databases, outlined here:
+
+Changes: we created a relation between Flight and Airplane called itsPlane. In order to implement this relation we added to the Flight table a column referencing the airplane called:
+```sh
+ALTER TABLE public.flight
+ADD COLUMN serial_number INTEGER;
+We populated this column using the following command:
+UPDATE public.flight
+SET serial_number = FLOOR(RANDOM() * 12883);
+```
 
 ### Integrated Views
 #### View 1
@@ -396,4 +409,20 @@ Database administrators and data quality managers.
 | 4 | 6041.815|
 
 ##### Errors
+When we tried to use the "With Check Option" we ran into the issue detailed below. Instead we used triggers and functions for validation to automatically update the underlying tables.
+<img width="530" alt="checkoptionerror" src="https://github.com/user-attachments/assets/f3befa0b-5240-43ac-a1f0-9856d849da5f">
+
+- **`WITH CHECK OPTION` Limitation**: The `WITH CHECK OPTION` ensures that data modifications made through a view must meet the view's query conditions. In the `review_airplane_data` view, the complex joins and conditions across multiple tables may not be easily enforced by `WITH CHECK OPTION`, leading to issues when trying to apply data constraints or validation.
+
+- **Trigger Implementation**: Due to the limitations of `WITH CHECK OPTION`, triggers were utilized to enforce data integrity. Triggers can handle complex validation requirements and ensure that any data modifications adhere to the view's logic, by executing custom procedures before or after data changes are applied.
+
+- **Function Utilization**: Functions were used within triggers to implement detailed validation checks. These functions allow for more granular control over the validation process, ensuring that the data modifications conform to the view's structure and relationships among the underlying tables, providing a more flexible and reliable solution compared to `WITH CHECK OPTION`.
+<img width="384" alt="deleteworkaround trigger" src="https://github.com/user-attachments/assets/c0085d68-4e4f-41b6-ab78-f66a08988e25">
+
+The code for the functions and triggers is available [here](view_triggers_functions.sql)
+
+
+
+
+
 
