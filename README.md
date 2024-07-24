@@ -415,6 +415,7 @@ Allows passengers to verify their boarding pass details and ensure that all info
 
 **User:**
 Passengers seeking to confirm their flight reservation details.
+<img width="618" alt="boardingpass" src="https://github.com/user-attachments/assets/155ad9f8-3c90-4a26-bee3-daa92dccad7c">
 
 ---
 
@@ -454,7 +455,8 @@ Adds a new boarding pass entry, which may be used for managing ticketing and pas
 
 **User:**
 Ticketing and check-in staff adding new boarding pass information into the system.
-
+<img width="598" alt="Boardingpass_Insert_error" src="https://github.com/user-attachments/assets/1de53282-40a2-408c-9d6a-5f074097ebcd">
+To combat the above error, we used a workaround detailed below in the Errors section.
 ##### Timing
 | Query Number | [RunTime](Intergated_Views_Queries_Log.log) | 
 |----------|----------|
