@@ -319,3 +319,244 @@ We selected complex queries that benefit from encapsulation within functions for
 ![image](https://github.com/ephmonster/miniProjectDatabase/assets/33190140/d744f33b-4c02-416a-9364-89c1df321322)
 As can be seen in the screenshots above the amount of JetA fuel in TLV went down by 120000 liters after the query was ran twice, once in the image and once just before.
 
+
+## Stage 4
+
+### Integration
+1) First we outlined the DSD and ERD to create a blueprint of how we would merge the 2 databases together
+### Foreign ERD
+![ERD (1)](https://github.com/user-attachments/assets/5024528a-12d6-4b72-8940-8457b13a1e29)
+#### Integrated ERD
+![Integrated_ERD](https://github.com/user-attachments/assets/fe28ac48-7373-462f-b197-69d81f0ee653)
+#### Integrated DSD
+![Integrated_DSD](https://github.com/user-attachments/assets/370649ea-5b12-41d7-9b31-897e840d1368)
+2) We created a new database from the datadump backup from our friends database.
+3) We created a Forgein Data Wrapper linked to the other database.
+<img width="479" alt="role_creation" src="https://github.com/user-attachments/assets/466d1c8c-59f6-4551-9d38-0c9eea1b26b5">
+
+4) We created a mapping to the forgein database
+<img width="452" alt="mapping" src="https://github.com/user-attachments/assets/a01c73c8-fbfd-4478-9262-99e43ad0e776">
+
+5) Then imported the forgein schema
+To view the commands click [here](integration_forgein_data_wrapper_creation.sql)
+6) Then we implemented the necessary changes to blend the 2 databases, outlined here:
+
+Changes: we created a relation between Flight and Airplane called itsPlane. In order to implement this relation we added to the Flight table a column referencing the airplane called:
+```sh
+ALTER TABLE public.flight
+ADD COLUMN serial_number INTEGER;
+We populated this column using the following command:
+UPDATE public.flight
+SET serial_number = FLOOR(RANDOM() * 12883);
+```
+Additionally, we now have Flight as part of the relation landingtakingoff, where flightid in landingtakingoff references a flightid in the Flight table
+
+Another change we made was to add a table ItsGate which relates a flight to its gates. This is the command we used: 
+```sh
+CREATE TABLE ItsGate
+(
+  flightid INT NOT NULL,
+  gatenumber INT NOT NULL,
+  location VARCHAR NOT NULL,
+  PRIMARY KEY (flightid, gatenumber, location)
+);
+```
+
+We populaled this table using the following command:
+```sh
+INSERT INTO ItsGate (flightid, gatenumber, location)
+SELECT f.flightid, g.gatenumber, g.location
+FROM gate g
+JOIN 
+landingtakingoff l ON g.location = l.location
+JOIN flight f ON l.flightID = f.flightid
+```
+### Integrated Views
+#### View 1 - [Boarding Pass] (integrated_views.sql)
+Explanation - this view is helpful in representing information for each passenger - it has name, id, ticked id, flight id, flightcode, location and gatenumber
+### Boarding Pass View
+
+#### User:
+Passenger
+
+#### Need:
+To access and verify the details of their flight reservation.
+
+#### Function:
+This view provides passengers with a comprehensive summary of their boarding pass information, including flight number, departure and arrival times, seat assignment, and gate information. It also includes crucial details like boarding group and any special instructions or alerts related to the flight. The boarding pass view helps passengers prepare for their journey by consolidating all essential travel information in one place.
+```sh
+create or replace view boarding_passes AS
+select
+c.name,
+c.customerid,
+t.ticketid,
+f.flightid,
+fc.flightcode,
+g.location,
+g.gatenumber
+FROM
+customer c
+JOIN ticket t ON t.customerid = c.customerid
+JOIN flight f on t.flightid = f.flightid
+JOIN flightinfo fc ON f.flightcode = fc.flightcode
+JOIN ItsGate g ON g.flightid = f.flightid 
+JOIN landingtakingoff l ON l.flightid = f.flightid
+WHERE l.lt = 0 AND g.location = l.location
+```
+##### [Queries](Integrate_View_Queries.sql)
+
+### Query 1
+
+**Summary:**
+Retrieves boarding pass details for a specific passenger, including their name, ticket ID, flight information, and gate number.
+
+**Use Case:**
+Allows passengers to verify their boarding pass details and ensure that all information related to their flight and gate assignment is correct.
+
+**User:**
+Passengers seeking to confirm their flight reservation details.
+<img width="618" alt="boardingpass" src="https://github.com/user-attachments/assets/155ad9f8-3c90-4a26-bee3-daa92dccad7c">
+
+---
+
+### Query 2
+
+**Summary:**
+Retrieves boarding pass details for all passengers on a specific flight, including their names, ticket IDs, and gate information.
+
+**Use Case:**
+Helps in identifying all passengers for a particular flight, which can be useful for flight attendants and gate staff to manage boarding and passenger queries.
+
+**User:**
+Flight crew and airport staff needing to review passenger details for a specific flight.
+
+---
+
+### Query 3
+
+**Summary:**
+Updates the gate number for all records in the view associated with a specific flight and location.
+
+**Use Case:**
+Allows for the modification of gate assignments for a flight, reflecting changes in gate assignments in real-time.
+
+**User:**
+Airport operations personnel managing gate assignments and updates.
+
+---
+
+### Query 4
+
+**Summary:**
+Inserts a new boarding pass record into the view with specified passenger and flight details.
+
+**Use Case:**
+Adds a new boarding pass entry, which may be used for managing ticketing and passenger information. Note that actual insertion typically affects underlying tables.
+
+**User:**
+Ticketing and check-in staff adding new boarding pass information into the system.
+<img width="598" alt="Boardingpass_Insert_error" src="https://github.com/user-attachments/assets/1de53282-40a2-408c-9d6a-5f074097ebcd">
+To combat the above error, we used a workaround detailed below in the Errors section.
+##### Timing
+| Query Number | [RunTime](Intergated_Views_Queries_Log.log) | 
+|----------|----------|
+| 1 | 42.352 |
+| 2 | 4.974 |
+| 3 | 0.547 |
+| 4 |  5.153 |
+#### View 2
+This view combines the airline equipment database with the ticketing database. 
+Goal: Leverage client feedback on their flight experience to improve flight quality specifically relating to the airplanes.
+We create joins to combine user ratings to the flight they took and which planes were used to better understand client experience for a given flight, as well as gain insite into trends of client ratings based on the plane model they flew (to see whether clients enjoyed flying on newer models better by a significant amount).
+##### Users
+Data Analysts: To analyze trends in customer satisfaction and operational performance.
+Customer Service Teams: To quickly access customer feedback and address issues.
+Management: To make informed decisions based on comprehensive data.
+
+```sh
+CREATE OR REPLACE VIEW review_airplane_data AS
+SELECT
+    a.serialnumber,
+    f.flightid,
+    t.ticketid,
+    r.rating
+FROM
+    airplane a
+JOIN
+    public.flight f ON f.serial_number = a.serialnumber
+JOIN
+    public.ticket t ON t.flightid = f.flightid
+JOIN
+    public.review r ON r.ticketid = t.ticketid;
+```
+
+##### [Queries](Integrate_View_Queries.sql)
+**Query 1:**
+
+**Summary:**
+Calculates the average rating for each airplane make and model, ordered by highest rating.
+
+**Use Case:**
+Determine the most highly rated airplane models based on customer reviews.
+
+**User:**
+Airline data analysts.
+
+**Query 2:**
+
+**Summary:**
+Prepares and executes an update to change the rating of a specific ticket.
+
+**Use Case:**
+Modify a customer's review rating for a specific flight ticket.
+
+**User:**
+Database administrators.
+
+**Query 3:**
+
+**Summary:**
+Calculates the average rating and the number of reviews for each flight, ordered by highest average rating.
+
+**Use Case:**
+Identify flights with the best customer satisfaction and the volume of reviews they received.
+
+**User:**
+Airline management and data analysts.
+
+**Query 4:**
+
+**Summary:**
+Deletes reviews for flights that have only one review to ensure data quality.
+
+**Use Case:**
+Clean the review database by removing single-review flights to improve the reliability of aggregated data.
+
+**User:**
+Database administrators and data quality managers.
+##### Timing
+| Query Number | [RunTime](Intergated_Views_Queries_Log.log) | 
+|----------|----------|
+| 1 | 3892.775 |
+| 2 | 7.189 |
+| 3 | 2925.043 |
+| 4 | 6041.815|
+
+##### Errors
+When we tried to use the "With Check Option" we ran into the issue detailed below. Instead we used triggers and functions for validation to automatically update the underlying tables.
+<img width="530" alt="checkoptionerror" src="https://github.com/user-attachments/assets/f3befa0b-5240-43ac-a1f0-9856d849da5f">
+
+- **`WITH CHECK OPTION` Limitation**: The `WITH CHECK OPTION` ensures that data modifications made through a view must meet the view's query conditions. In the `review_airplane_data` view, the complex joins and conditions across multiple tables may not be easily enforced by `WITH CHECK OPTION`, leading to issues when trying to apply data constraints or validation.
+
+- **Trigger Implementation**: Due to the limitations of `WITH CHECK OPTION`, triggers were utilized to enforce data integrity. Triggers can handle complex validation requirements and ensure that any data modifications adhere to the view's logic, by executing custom procedures before or after data changes are applied.
+
+- **Function Utilization**: Functions were used within triggers to implement detailed validation checks. These functions allow for more granular control over the validation process, ensuring that the data modifications conform to the view's structure and relationships among the underlying tables, providing a more flexible and reliable solution compared to `WITH CHECK OPTION`.
+<img width="384" alt="deleteworkaround trigger" src="https://github.com/user-attachments/assets/c0085d68-4e4f-41b6-ab78-f66a08988e25">
+
+The code for the functions and triggers is available [here](view_triggers_functions.sql)
+
+
+
+
+
+
