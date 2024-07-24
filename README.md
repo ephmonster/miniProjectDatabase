@@ -324,6 +324,8 @@ As can be seen in the screenshots above the amount of JetA fuel in TLV went down
 
 ### Integration
 1) First we outlined the DSD and ERD to create a blueprint of how we would merge the 2 databases together
+### Foreign ERD
+![ERD (1)](https://github.com/user-attachments/assets/5024528a-12d6-4b72-8940-8457b13a1e29)
 #### Integrated ERD
 ![Integrated_ERD](https://github.com/user-attachments/assets/fe28ac48-7373-462f-b197-69d81f0ee653)
 #### Integrated DSD
