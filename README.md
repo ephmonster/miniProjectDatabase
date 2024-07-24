@@ -330,7 +330,11 @@ As can be seen in the screenshots above the amount of JetA fuel in TLV went down
 ![Integrated_DSD](https://github.com/user-attachments/assets/370649ea-5b12-41d7-9b31-897e840d1368)
 2) We created a new database from the datadump backup from our friends database.
 3) We created a Forgein Data Wrapper linked to the other database.
+<img width="479" alt="role_creation" src="https://github.com/user-attachments/assets/466d1c8c-59f6-4551-9d38-0c9eea1b26b5">
+
 4) We created a mapping to the forgein database
+<img width="452" alt="mapping" src="https://github.com/user-attachments/assets/a01c73c8-fbfd-4478-9262-99e43ad0e776">
+
 5) Then imported the forgein schema
 To view the commands click [here](integration_forgein_data_wrapper_creation.sql)
 6) Then we implemented the necessary changes to blend the 2 databases, outlined here:
@@ -343,10 +347,119 @@ We populated this column using the following command:
 UPDATE public.flight
 SET serial_number = FLOOR(RANDOM() * 12883);
 ```
+Additionally, we now have Flight as part of the relation landingtakingoff, where flightid in landingtakingoff references a flightid in the Flight table
 
+Another change we made was to add a table ItsGate which relates a flight to its gates. This is the command we used: 
+```sh
+CREATE TABLE ItsGate
+(
+  flightid INT NOT NULL,
+  gatenumber INT NOT NULL,
+  location VARCHAR NOT NULL,
+  PRIMARY KEY (flightid, gatenumber, location)
+);
+```
+
+We populaled this table using the following command:
+```sh
+INSERT INTO ItsGate (flightid, gatenumber, location)
+SELECT f.flightid, g.gatenumber, g.location
+FROM gate g
+JOIN 
+landingtakingoff l ON g.location = l.location
+JOIN flight f ON l.flightID = f.flightid
+```
 ### Integrated Views
-#### View 1
+#### View 1 - [Boarding Pass] (integrated_views.sql)
+Explanation - this view is helpful in representing information for each passenger - it has name, id, ticked id, flight id, flightcode, location and gatenumber
+### Boarding Pass View
 
+#### User:
+Passenger
+
+#### Need:
+To access and verify the details of their flight reservation.
+
+#### Function:
+This view provides passengers with a comprehensive summary of their boarding pass information, including flight number, departure and arrival times, seat assignment, and gate information. It also includes crucial details like boarding group and any special instructions or alerts related to the flight. The boarding pass view helps passengers prepare for their journey by consolidating all essential travel information in one place.
+```sh
+create or replace view boarding_passes AS
+select
+c.name,
+c.customerid,
+t.ticketid,
+f.flightid,
+fc.flightcode,
+g.location,
+g.gatenumber
+FROM
+customer c
+JOIN ticket t ON t.customerid = c.customerid
+JOIN flight f on t.flightid = f.flightid
+JOIN flightinfo fc ON f.flightcode = fc.flightcode
+JOIN ItsGate g ON g.flightid = f.flightid 
+JOIN landingtakingoff l ON l.flightid = f.flightid
+WHERE l.lt = 0 AND g.location = l.location
+```
+##### [Queries](Integrate_View_queries.sql)
+
+### Query 1
+
+**Summary:**
+Retrieves boarding pass details for a specific passenger, including their name, ticket ID, flight information, and gate number.
+
+**Use Case:**
+Allows passengers to verify their boarding pass details and ensure that all information related to their flight and gate assignment is correct.
+
+**User:**
+Passengers seeking to confirm their flight reservation details.
+
+---
+
+### Query 2
+
+**Summary:**
+Retrieves boarding pass details for all passengers on a specific flight, including their names, ticket IDs, and gate information.
+
+**Use Case:**
+Helps in identifying all passengers for a particular flight, which can be useful for flight attendants and gate staff to manage boarding and passenger queries.
+
+**User:**
+Flight crew and airport staff needing to review passenger details for a specific flight.
+
+---
+
+### Query 3
+
+**Summary:**
+Updates the gate number for all records in the view associated with a specific flight and location.
+
+**Use Case:**
+Allows for the modification of gate assignments for a flight, reflecting changes in gate assignments in real-time.
+
+**User:**
+Airport operations personnel managing gate assignments and updates.
+
+---
+
+### Query 4
+
+**Summary:**
+Inserts a new boarding pass record into the view with specified passenger and flight details.
+
+**Use Case:**
+Adds a new boarding pass entry, which may be used for managing ticketing and passenger information. Note that actual insertion typically affects underlying tables.
+
+**User:**
+Ticketing and check-in staff adding new boarding pass information into the system.
+
+##### Timing
+| Query Number | [RunTime](Intergated_Views_Queries_Log.log) | 
+|----------|----------|
+| 1 | 3892.775 |
+| 2 | 7.189 |
+| 3 | 2925.043 |
+| 4 | 6041.815|
 #### View 2
 This view combines the airline equipment database with the ticketing database. 
 Goal: Leverage client feedback on their flight experience to improve flight quality specifically relating to the airplanes.
@@ -356,7 +469,24 @@ Data Analysts: To analyze trends in customer satisfaction and operational perfor
 Customer Service Teams: To quickly access customer feedback and address issues.
 Management: To make informed decisions based on comprehensive data.
 
-##### Queries
+```sh
+CREATE OR REPLACE VIEW review_airplane_data AS
+SELECT
+    a.serialnumber,
+    f.flightid,
+    t.ticketid,
+    r.rating
+FROM
+    airplane a
+JOIN
+    public.flight f ON f.serial_number = a.serialnumber
+JOIN
+    public.ticket t ON t.flightid = f.flightid
+JOIN
+    public.review r ON r.ticketid = t.ticketid;
+```
+
+##### [Queries](Integrate_View_queries.sql)
 **Query 1:**
 
 **Summary:**
