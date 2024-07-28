@@ -378,7 +378,7 @@ landingtakingoff l ON g.location = l.location
 JOIN flight f ON l.flightID = f.flightid
 ```
 ### Integrated Views
-#### View 1 - [Boarding Pass] (integrated_views.sql)
+#### View 1 - [Boarding Pass](integrated_views.sql)
 Explanation - this view is helpful in representing information for each passenger - it has name, id, ticked id, flight id, flightcode, location and gatenumber
 ### Boarding Pass View
 
