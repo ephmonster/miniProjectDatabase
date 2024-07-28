@@ -327,9 +327,11 @@ As can be seen in the screenshots above the amount of JetA fuel in TLV went down
 ### Foreign ERD
 ![ERD (1)](https://github.com/user-attachments/assets/5024528a-12d6-4b72-8940-8457b13a1e29)
 #### Integrated ERD
-![Integrated_ERD](https://github.com/user-attachments/assets/fe28ac48-7373-462f-b197-69d81f0ee653)
+![image (3)](https://github.com/user-attachments/assets/0375768b-9c23-452b-81dc-9a0f90f2f460)
+
 #### Integrated DSD
-![Integrated_DSD](https://github.com/user-attachments/assets/370649ea-5b12-41d7-9b31-897e840d1368)
+![image (4)](https://github.com/user-attachments/assets/1c25682b-1340-4e65-bc8d-8a76f6fddd00)
+
 2) We created a new database from the datadump backup from our friends database.
 3) We created a Forgein Data Wrapper linked to the other database.
 <img width="479" alt="role_creation" src="https://github.com/user-attachments/assets/466d1c8c-59f6-4551-9d38-0c9eea1b26b5">
