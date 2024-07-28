@@ -389,7 +389,7 @@ Passenger
 To access and verify the details of their flight reservation.
 
 #### Function:
-This view provides passengers with a comprehensive summary of their boarding pass information, including flight number, departure and arrival times, seat assignment, and gate information. It also includes crucial details like boarding group and any special instructions or alerts related to the flight. The boarding pass view helps passengers prepare for their journey by consolidating all essential travel information in one place.
+This view provides passengers with a comprehensive summary of their boarding pass information, including flight info, ctraveler info, and gate information.
 ```sh
 create or replace view boarding_passes AS
 select
