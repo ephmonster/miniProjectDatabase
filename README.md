@@ -331,6 +331,10 @@ As can be seen in the screenshots above the amount of JetA fuel in TLV went down
 
 #### Integrated DSD
 ![image (4)](https://github.com/user-attachments/assets/1c25682b-1340-4e65-bc8d-8a76f6fddd00)
+We had three points of contact between the two databases:
+  a) between "flight" and "airplane"
+  b) between "flight" and "gate"
+  c) between "flight" and "landingtakingoff"
 
 2) We created a new database from the datadump backup from our friends database.
 3) We created a Forgein Data Wrapper linked to the other database.
