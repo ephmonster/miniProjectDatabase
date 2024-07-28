@@ -337,13 +337,13 @@ We had three points of contact between the two databases:
   c) between "flight" and "landingtakingoff"
 
 2) We created a new database from the datadump backup from our friends database.
-3) We created a Forgein Data Wrapper linked to the other database.
+3) We created a Foreign Data Wrapper linked to the other database.
 <img width="479" alt="role_creation" src="https://github.com/user-attachments/assets/466d1c8c-59f6-4551-9d38-0c9eea1b26b5">
 
-4) We created a mapping to the forgein database
+4) We created a mapping to the foreign database
 <img width="452" alt="mapping" src="https://github.com/user-attachments/assets/a01c73c8-fbfd-4478-9262-99e43ad0e776">
 
-5) Then imported the forgein schema
+5) Then imported the foreign schema
 To view the commands click [here](integration_forgein_data_wrapper_creation.sql)
 6) Then we implemented the necessary changes to blend the 2 databases, outlined here:
 
